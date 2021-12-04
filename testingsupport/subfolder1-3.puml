@@ -1,31 +1,21 @@
 @startuml
 namespace subfolder {
-    interface TestInterfaceAsField  {
+    interface TestInterfaceAsField {
     }
-    interface test2  {
+    interface test2 {
+        - test() 
     }
 }
 "subfolder.TestInterfaceAsField" *-- "subfolder.test2"
-
-
-
 namespace subfolder2 {
-    class Subfolder2 << (S,Aquamarine) >> {
+    class "Subfolder2"  << (S,  7fffd4ff)  >> {
         + SubfolderFunction(b bool, i int) bool
-
     }
 }
-
 "subfolder3.SubfolderInterface" <|-- "subfolder2.Subfolder2"
-
-
 namespace subfolder3 {
-    interface SubfolderInterface  {
-        + SubfolderFunction( bool,  int) bool
-
+    interface SubfolderInterface {
+        + SubfolderFunction(bool, int) bool
     }
 }
-
-
-
 @enduml

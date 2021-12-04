@@ -1,4 +1,4 @@
-package classdiagram
+package pkgdiagram
 
 import (
 	"errors"
@@ -8,25 +8,19 @@ import (
 	"path/filepath"
 	"strings"
 
-	goplantuml "github.com/keisuke-m123/godiagramgen/diagram/class"
-	"github.com/keisuke-m123/godiagramgen/diagram/class/renderer"
+	"github.com/keisuke-m123/godiagramgen/diagram/pkg"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
 
 const (
-	FlagIgnore    = "ignore"
-	FlagTitle     = "title"
-	FlagNotes     = "notes"
-	FlagOutput    = "output"
-	FlagTheme     = "theme"
-	FlagRecursive = "recursive"
+	FlagIgnore = "ignore"
+	FlagOutput = "output"
+	FlagTheme  = "theme"
 )
 
 type FlagValues struct {
 	Ignore    string
-	Title     string
-	Notes     string
 	Output    string
 	Theme     string
 	Recursive bool
@@ -41,21 +35,18 @@ func (fs *FlagSet) InitializeFlags() {
 	s := fs.set
 	vs := &fs.values
 	s.StringVar(&vs.Ignore, FlagIgnore, "", "Comma separated list of folders to ignore")
-	s.StringVar(&vs.Title, FlagTitle, "", "Title of the generated diagram")
-	s.StringVar(&vs.Notes, FlagNotes, "", "Comma separated list of notes to be added to the diagram")
 	s.StringVar(&vs.Output, FlagOutput, "", "Output file path. If omitted, then this will default to standard output")
 	s.StringVar(&vs.Theme, FlagTheme, "", "Change theme")
-	s.BoolVar(&vs.Recursive, FlagRecursive, false, "Walk all directories recursively")
 }
 
 func (fs *FlagSet) Values() FlagValues {
 	return fs.values
 }
 
-func NewClassDiagramGenCommand() *cobra.Command {
+func NewPackageDiagramGenCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "class",
-		Short: "generate class diagram from specified packages",
+		Use:   "package",
+		Short: "generate package diagram from specified packages",
 	}
 
 	fs := FlagSet{set: cmd.PersistentFlags()}
@@ -67,23 +58,6 @@ func NewClassDiagramGenCommand() *cobra.Command {
 }
 
 func run(flagValues FlagValues, args []string) {
-	var noteList []string
-	if flagValues.Notes != "" {
-		noteList = append(noteList, "<b><u>Notes</u></b>")
-	}
-	split := strings.Split(flagValues.Notes, ",")
-	for _, note := range split {
-		trimmed := strings.TrimSpace(note)
-		if trimmed != "" {
-			noteList = append(noteList, trimmed)
-		}
-	}
-	renderingOptions := &renderer.RenderingOptions{
-		Title: flagValues.Title,
-		Notes: strings.Join(noteList, "\n"),
-		Theme: flagValues.Theme,
-	}
-
 	dirs, err := getDirectories(args)
 	if err != nil {
 		fmt.Println("usage:\ngoplantuml <DIR>\nDIR Must be a valid directory")
@@ -97,7 +71,7 @@ func run(flagValues FlagValues, args []string) {
 		os.Exit(1)
 	}
 
-	cd, err := goplantuml.NewDiagram(dirs, ignoredDirectories, flagValues.Recursive, renderingOptions)
+	cd, err := pkg.NewDiagram(dirs, ignoredDirectories, flagValues.Theme)
 	if err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)

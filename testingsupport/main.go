@@ -12,13 +12,19 @@ func (t *test) test() {
 	f.Println("Hello Test")
 }
 
+type testInterface interface {
+	test()
+}
+
 type test struct {
 	field  int
 	field2 TestComplicatedAlias
 	foo    parenthesizedtypedeclarations.Foo
 }
 
-type myInt int
+type definedTypeInt int
+
+type aliasString = string
 
 var globalVariable int
 

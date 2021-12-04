@@ -1,0 +1,108 @@
+@startuml
+!theme reddress-darkorange
+skinparam class {
+    attributeIconSize 8
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace cmd {
+                namespace godiagramgen {
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace cmd {
+                namespace godiagramgen {
+                    namespace classdiagram {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace cmd {
+                namespace godiagramgen {
+                    namespace pkgdiagram {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace class {
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace class {
+                    namespace renderer {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace pkg {
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace gocode {
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace plantuml {
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace testutil {
+            }
+        }
+    }
+}
+"githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.classdiagram" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen"
+"githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.pkgdiagram" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen"
+"githubcom.keisuke-m123.godiagramgen.diagram.class" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.classdiagram"
+"githubcom.keisuke-m123.godiagramgen.diagram.class.renderer" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.classdiagram"
+"githubcom.keisuke-m123.godiagramgen.diagram.pkg" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.pkgdiagram"
+"githubcom.keisuke-m123.godiagramgen.diagram.class.renderer" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class"
+"githubcom.keisuke-m123.godiagramgen.gocode" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class"
+"githubcom.keisuke-m123.godiagramgen.plantuml" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class"
+"githubcom.keisuke-m123.godiagramgen.gocode" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class.renderer"
+"githubcom.keisuke-m123.godiagramgen.plantuml" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class.renderer"
+"githubcom.keisuke-m123.godiagramgen.gocode" <-- "githubcom.keisuke-m123.godiagramgen.diagram.pkg"
+"githubcom.keisuke-m123.godiagramgen.plantuml" <-- "githubcom.keisuke-m123.godiagramgen.diagram.pkg"
+@enduml

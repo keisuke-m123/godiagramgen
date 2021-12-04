@@ -1,0 +1,106 @@
+@startuml
+!theme reddress-darkorange
+skinparam class {
+    attributeIconSize 8
+}
+namespace aliasmethods {
+    class "Code"  << (D,  ff7700ff) type of __int__ >> {
+        + AsInt() int
+    }
+    class "Properties"  << (D,  ff7700ff)  >> {
+        + Copy() Properties
+    }
+    class "StringList"  << (D,  ff7700ff)  >> {
+        + Add(s string) StringList
+    }
+}
+namespace aliasmethods {
+    class "map[string]interface{}" as mapstringinterface << (m,  3cb371ff)  >> {
+    }
+}
+"aliasmethods.mapstringinterface" #.. "aliasmethods.Properties"
+namespace aliasmethods {
+    class "[]string" as string << (s,  3cb371ff)  >> {
+    }
+}
+"aliasmethods.string" #.. "aliasmethods.StringList"
+namespace connectionlabels {
+    class "ImplementsAbstractInterface"  << (S,  7fffd4ff)  >> {
+        + AliasOfInt AliasOfInt
+        + PublicUse AbstractInterface
+        - interfaceFunction() bool
+    }
+    interface AbstractInterface {
+        - interfaceFunction() bool
+    }
+    class "AliasOfInt"  << (D,  ff7700ff) type of __int__ >> {
+    }
+}
+"connectionlabels.AliasOfInt" *-- "connectionlabels.ImplementsAbstractInterface"
+"connectionlabels.AbstractInterface" <|-- "connectionlabels.ImplementsAbstractInterface"
+"connectionlabels.ImplementsAbstractInterface" o-- "connectionlabels.AbstractInterface"
+namespace parenthesizedtypedeclarations {
+    class "defaultFoo"  << (S,  7fffd4ff)  >> {
+        + Foo() 
+    }
+    interface Bar {
+        + Bar() 
+    }
+    interface Foo {
+        + Foo() 
+    }
+}
+"parenthesizedtypedeclarations.Foo" <|-- "parenthesizedtypedeclarations.defaultFoo"
+namespace renderingoptions {
+    class "Test"  << (S,  7fffd4ff)  >> {
+        - integer int
+        - function() 
+    }
+}
+namespace subfolder {
+    interface TestInterfaceAsField {
+    }
+    interface test2 {
+        - test() 
+    }
+}
+"subfolder.TestInterfaceAsField" *-- "subfolder.test2"
+namespace subfolder2 {
+    class "Subfolder2"  << (S,  7fffd4ff)  >> {
+        + SubfolderFunction(b bool, i int) bool
+    }
+}
+"subfolder3.SubfolderInterface" <|-- "subfolder2.Subfolder2"
+namespace subfolder3 {
+    interface SubfolderInterface {
+        + SubfolderFunction(bool, int) bool
+    }
+}
+namespace testingsupport {
+    class "test"  << (S,  7fffd4ff)  >> {
+        - field int
+        - field2 TestComplicatedAlias
+        - foo parenthesizedtypedeclarations.Foo
+        - test() 
+    }
+    interface testInterface {
+        - test() 
+    }
+    class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
+    }
+    class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
+    }
+}
+"testingsupport.testInterface" <|-- "testingsupport.test"
+"testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
+"testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "func(strings.Builder) bool" as funcstringsBuilderbool << (f,  3cb371ff)  >> {
+    }
+}
+"testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "aliasString"  << (T,  eddc44ff) alias of __string__ >> {
+    }
+}
+@enduml

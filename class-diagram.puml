@@ -1,0 +1,400 @@
+@startuml
+!theme reddress-darkorange
+skinparam class {
+    attributeIconSize 8
+}
+namespace gocode {
+    class "DefinedType"  << (S,  7fffd4ff)  >> {
+        - name DefinedTypeName
+        - pkgSummary *PackageSummary
+        - typ *Type
+        - methods *FunctionList
+        + Methods() []*Function
+        + Name() DefinedTypeName
+        + PackageSummary() *PackageSummary
+        + Type() *Type
+    }
+    class "DefinedTypeList"  << (S,  7fffd4ff)  >> {
+        - definedTypes []*DefinedType
+        - asSlice() []*DefinedType
+    }
+    class "Embed"  << (S,  7fffd4ff)  >> {
+        - typ *Type
+        + Type() *Type
+    }
+    class "EmbedList"  << (S,  7fffd4ff)  >> {
+        - embeds []*Embed
+        - asSlice() []*Embed
+    }
+    class "Field"  << (S,  7fffd4ff)  >> {
+        - goVar *Var
+        - name FieldName
+        - pkgSummary *PackageSummary
+        - typ *Type
+        + Embedded() bool
+        + Name() FieldName
+        + PackageSummary() *PackageSummary
+        + Type() *Type
+    }
+    class "FieldList"  << (S,  7fffd4ff)  >> {
+        - fields []*Field
+        - asSlice() []*Field
+    }
+    class "Function"  << (S,  7fffd4ff)  >> {
+        - name FunctionName
+        - parameters Parameters
+        - returnValues ReturnValues
+        + Name() FunctionName
+        + Parameters() Parameters
+        + ReturnValues() ReturnValues
+    }
+    class "FunctionList"  << (S,  7fffd4ff)  >> {
+        - functions []*Function
+        - asSlice() []*Function
+    }
+    class "Import"  << (S,  7fffd4ff)  >> {
+        - alias ImportAlias
+        - pkgSummary *PackageSummary
+        + AliasName() ImportAlias
+        + HasAliasName() bool
+        + PackageSummary() *PackageSummary
+    }
+    class "ImportList"  << (S,  7fffd4ff)  >> {
+        - imports map[PackageName]*Import
+        + Get(pkgName PackageName) (*Import, bool)
+        + Len() int
+        - asSlice() []*Import
+    }
+    class "Interface"  << (S,  7fffd4ff)  >> {
+        - goInterface *Interface
+        - name InterfaceName
+        - pkgSummary *PackageSummary
+        - methods *FunctionList
+        - embeds *EmbedList
+        + Embeds() []*Embed
+        + Methods() []*Function
+        + Name() InterfaceName
+        + PackageInterfaceName() PackageInterfaceName
+        + PackageSummary() *PackageSummary
+    }
+    class "InterfaceList"  << (S,  7fffd4ff)  >> {
+        - interfaces []*Interface
+        - asSlice() []*Interface
+    }
+    class "LoadOptions"  << (S,  7fffd4ff)  >> {
+        + FileSystem afero.Fs
+        + Directories []string
+        + IgnoredDirectories []string
+        + Recursive bool
+    }
+    class "Package"  << (S,  7fffd4ff)  >> {
+        - summary *PackageSummary
+        - detail *PackageDetail
+        + Detail() *PackageDetail
+        + Summary() *PackageSummary
+    }
+    class "PackageDefinedTypeMap"  << (S,  7fffd4ff)  >> {
+        - m map[PackageName]map[DefinedTypeName]*DefinedType
+        + Get(pkgName PackageName, definedType DefinedTypeName) (*DefinedType, bool)
+        + PackageDefinedTypes(pkgName PackageName) []*DefinedType
+        - put(definedType *DefinedType) 
+    }
+    class "PackageDetail"  << (S,  7fffd4ff)  >> {
+        - imports *ImportList
+        - structs *StructList
+        - interfaces *InterfaceList
+        - typeAliases *TypeAliasList
+        - definedTypes *DefinedTypeList
+        + DefinedTypes() []*DefinedType
+        + Imports() []*Import
+        + Interfaces() []*Interface
+        + Structs() []*Struct
+        + TypeAliases() []*TypeAlias
+    }
+    class "PackageGraph"  << (S,  7fffd4ff)  >> {
+        - graph map[PackagePath][]*PackageSummary
+        + SortedImportPackagePaths(pkgPath PackagePath) []*PackageSummary
+        + SortedPackagePaths() []PackagePath
+    }
+    class "PackageInterfaceMap"  << (S,  7fffd4ff)  >> {
+        - m map[PackageName]map[InterfaceName]*Interface
+        + Contains(pkgName PackageName, interfaceName InterfaceName) bool
+        + Get(pkgName PackageName, interfaceName InterfaceName) (*Interface, bool)
+        + InterfaceAll() []*Interface
+        + PackageInterfaceNames() []PackageInterfaceName
+        + PackageInterfaces(pkgName PackageName) []*Interface
+        + PackageNames() []PackageName
+        - put(iface *Interface) 
+    }
+    class "PackageMap"  << (S,  7fffd4ff)  >> {
+        - m map[PackagePath]*Package
+        + AsSlice() []*Package
+        + Contains(pkgPath PackagePath) bool
+        - add(pkg *Package) 
+    }
+    class "PackageStructureMap"  << (S,  7fffd4ff)  >> {
+        - m map[PackageName]map[StructName]*Struct
+        + Contains(pkgName PackageName, structName StructName) bool
+        + Get(pkgName PackageName, structName StructName) (*Struct, bool)
+        + PackageNames() []PackageName
+        + PackageStructNames() []PackageStructName
+        + PackageStructs(pkgName PackageName) []*Struct
+        + StructAll() []*Struct
+        - put(s *Struct) 
+    }
+    class "PackageSummary"  << (S,  7fffd4ff)  >> {
+        - name PackageName
+        - path PackagePath
+        + Equal(other *PackageSummary) bool
+        + Name() PackageName
+        + Path() PackagePath
+    }
+    class "PackageTypeAliasMap"  << (S,  7fffd4ff)  >> {
+        - m map[PackageName]map[TypeAliasName]*TypeAlias
+        + AliasAll() []*TypeAlias
+        + Contains(pkgName PackageName, aliasName TypeAliasName) bool
+        + Get(pkgName PackageName, aliasName TypeAliasName) (*TypeAlias, bool)
+        + PackageAliasNames() []PackageTypeAliasName
+        + PackageAliases(pkgName PackageName) []*TypeAlias
+        + PackageNames() []PackageName
+        - put(al *TypeAlias) 
+    }
+    class "Parameter"  << (S,  7fffd4ff)  >> {
+        - name string
+        - typ *Type
+        + Name() string
+        + Type() *Type
+    }
+    class "Relations"  << (S,  7fffd4ff)  >> {
+        - packages *PackageMap
+        - structs *PackageStructureMap
+        - interfaces *PackageInterfaceMap
+        - typeAliases *PackageTypeAliasMap
+        - definedTypes *PackageDefinedTypeMap
+        + DefinedTypes() *PackageDefinedTypeMap
+        + GeneratePackageGraph() *PackageGraph
+        + Interfaces() *PackageInterfaceMap
+        + Packages() *PackageMap
+        + Structs() *PackageStructureMap
+        + TypeAliases() *PackageTypeAliasMap
+        - load(options *LoadOptions) error
+        - parseDirectory(directoryPath string) error
+        - registerDefinedTypes(pkg *Package) 
+        - registerInterfaces(pkg *Package) 
+        - registerRelations() 
+        - registerStructs(pkg *Package) 
+        - registerTypeAliases(pkg *Package) 
+    }
+    class "ReturnValue"  << (S,  7fffd4ff)  >> {
+        - name string
+        - typ *Type
+        + Name() string
+        + Type() *Type
+    }
+    class "Struct"  << (S,  7fffd4ff)  >> {
+        - goType types.Type
+        - structName StructName
+        - pkgSummary *PackageSummary
+        - typ *Type
+        - methods *FunctionList
+        - fields *FieldList
+        - implements *PackageInterfaceMap
+        + Fields() []*Field
+        + ImplementInterfaces() *PackageInterfaceMap
+        + Implements(i *Interface) bool
+        + Methods() []*Function
+        + Name() StructName
+        + PackageStructName() PackageStructName
+        + PackageSummary() *PackageSummary
+        - addInterfaceIfImplements(i *Interface) 
+    }
+    class "StructList"  << (S,  7fffd4ff)  >> {
+        - structs []*Struct
+        - asSlice() []*Struct
+    }
+    class "Type"  << (S,  7fffd4ff)  >> {
+        - goType types.Type
+        - typeName TypeName
+        - relativeFullTypeName RelativeFullTypeName
+        - pkgSummary *PackageSummary
+        - fundamentalTypes []*Type
+        + Builtin() bool
+        + ContainsBuiltinInFundamentalTypes() bool
+        + FundamentalTypes() []*Type
+        + PackageSummary() *PackageSummary
+        + RelativeFullTypeName() RelativeFullTypeName
+        + TypeName() TypeName
+        - resetFullTypeName(currentPkgSummary *PackageSummary, typePackageSummary *PackageSummary) 
+    }
+    class "TypeAlias"  << (S,  7fffd4ff)  >> {
+        - name TypeAliasName
+        - pkgSummary *PackageSummary
+        - typ *Type
+        + Name() TypeAliasName
+        + PackageAliasName() PackageTypeAliasName
+        + PackageSummary() *PackageSummary
+        + Type() *Type
+    }
+    class "TypeAliasList"  << (S,  7fffd4ff)  >> {
+        - aliases []*TypeAlias
+        - asSlice() []*TypeAlias
+    }
+    class "typeConverter"  << (S,  7fffd4ff)  >> {
+        - currentPkgSummary *PackageSummary
+        + _typeName(typ Type) string
+        - fundamentalTypes(typ Type) []*Type
+        - signatureFundamentalTypes(t *Signature) []*Type
+        - typeName(typ Type) TypeName
+        - typeNameArray(t *Array) string
+        - typeNameBasic(t *Basic) string
+        - typeNameChan(t *Chan) string
+        - typeNameInterface(t *Interface) string
+        - typeNameMap(t *Map) string
+        - typeNameNamed(t *Named) string
+        - typeNamePointer(t *Pointer) string
+        - typeNameSignature(t *Signature) string
+        - typeNameSlice(t *Slice) string
+        - typeNameStruct(t *Struct) string
+    }
+    class "DefinedTypeName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "FieldName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "FunctionName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "ImportAlias"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "InterfaceName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "PackageInterfaceName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "PackageName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "PackagePath"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "PackageStructName"  << (D,  ff7700ff) type of __string__ >> {
+        + EqualString(s string) bool
+        + String() string
+    }
+    class "PackageTypeAliasName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "ParameterName"  << (D,  ff7700ff) type of __string__ >> {
+    }
+    class "Parameters"  << (D,  ff7700ff)  >> {
+    }
+    class "RelativeFullTypeName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "ReturnValueName"  << (D,  ff7700ff) type of __string__ >> {
+    }
+    class "ReturnValues"  << (D,  ff7700ff)  >> {
+    }
+    class "StructName"  << (D,  ff7700ff) type of __string__ >> {
+        + EqualString(s string) bool
+        + String() string
+    }
+    class "TypeAliasName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+    }
+    class "TypeName"  << (D,  ff7700ff) type of __string__ >> {
+        + String() string
+        - builtin() bool
+    }
+}
+"gocode.DefinedType" o-- "gocode.DefinedTypeName"
+"gocode.DefinedType" o-- "gocode.FunctionList"
+"gocode.DefinedType" o-- "gocode.PackageSummary"
+"gocode.DefinedType" o-- "gocode.Type"
+"gocode.DefinedTypeList" o-- "gocode.DefinedType"
+"gocode.Embed" o-- "gocode.Type"
+"gocode.EmbedList" o-- "gocode.Embed"
+"gocode.Field" o-- "gocode.FieldName"
+"gocode.Field" o-- "gocode.PackageSummary"
+"gocode.Field" o-- "gocode.Type"
+"gocode.Field" o-- "types.Var"
+"gocode.FieldList" o-- "gocode.Field"
+"gocode.Function" o-- "gocode.FunctionName"
+"gocode.Function" o-- "gocode.Parameters"
+"gocode.Function" o-- "gocode.ReturnValues"
+"gocode.FunctionList" o-- "gocode.Function"
+"gocode.Import" o-- "gocode.ImportAlias"
+"gocode.Import" o-- "gocode.PackageSummary"
+"gocode.ImportList" o-- "gocode.Import"
+"gocode.ImportList" o-- "gocode.PackageName"
+"gocode.Interface" o-- "gocode.EmbedList"
+"gocode.Interface" o-- "gocode.FunctionList"
+"gocode.Interface" o-- "types.Interface"
+"gocode.Interface" o-- "gocode.InterfaceName"
+"gocode.Interface" o-- "gocode.PackageSummary"
+"gocode.InterfaceList" o-- "gocode.Interface"
+"gocode.LoadOptions" o-- "afero.Fs"
+"gocode.Package" o-- "gocode.PackageDetail"
+"gocode.Package" o-- "gocode.PackageSummary"
+"gocode.PackageDefinedTypeMap" o-- "gocode.DefinedType"
+"gocode.PackageDefinedTypeMap" o-- "gocode.DefinedTypeName"
+"gocode.PackageDefinedTypeMap" o-- "gocode.PackageName"
+"gocode.PackageDetail" o-- "gocode.DefinedTypeList"
+"gocode.PackageDetail" o-- "gocode.ImportList"
+"gocode.PackageDetail" o-- "gocode.InterfaceList"
+"gocode.PackageDetail" o-- "gocode.StructList"
+"gocode.PackageDetail" o-- "gocode.TypeAliasList"
+"gocode.PackageGraph" o-- "gocode.PackagePath"
+"gocode.PackageGraph" o-- "gocode.PackageSummary"
+"gocode.PackageInterfaceMap" o-- "gocode.Interface"
+"gocode.PackageInterfaceMap" o-- "gocode.InterfaceName"
+"gocode.PackageInterfaceMap" o-- "gocode.PackageName"
+"gocode.PackageMap" o-- "gocode.Package"
+"gocode.PackageMap" o-- "gocode.PackagePath"
+"gocode.PackageStructureMap" o-- "gocode.PackageName"
+"gocode.PackageStructureMap" o-- "gocode.Struct"
+"gocode.PackageStructureMap" o-- "gocode.StructName"
+"gocode.PackageSummary" o-- "gocode.PackageName"
+"gocode.PackageSummary" o-- "gocode.PackagePath"
+"gocode.PackageTypeAliasMap" o-- "gocode.PackageName"
+"gocode.PackageTypeAliasMap" o-- "gocode.TypeAlias"
+"gocode.PackageTypeAliasMap" o-- "gocode.TypeAliasName"
+"gocode.Parameter" o-- "gocode.Type"
+"gocode.Relations" o-- "gocode.PackageDefinedTypeMap"
+"gocode.Relations" o-- "gocode.PackageInterfaceMap"
+"gocode.Relations" o-- "gocode.PackageMap"
+"gocode.Relations" o-- "gocode.PackageStructureMap"
+"gocode.Relations" o-- "gocode.PackageTypeAliasMap"
+"gocode.ReturnValue" o-- "gocode.Type"
+"gocode.Struct" o-- "gocode.FieldList"
+"gocode.Struct" o-- "gocode.FunctionList"
+"gocode.Struct" o-- "gocode.PackageInterfaceMap"
+"gocode.Struct" o-- "gocode.PackageSummary"
+"gocode.Struct" o-- "gocode.StructName"
+"gocode.Struct" o-- "gocode.Type"
+"gocode.Struct" o-- "types.Type"
+"gocode.StructList" o-- "gocode.Struct"
+"gocode.Type" o-- "gocode.PackageSummary"
+"gocode.Type" o-- "gocode.RelativeFullTypeName"
+"gocode.Type" o-- "types.Type"
+"gocode.Type" o-- "gocode.Type"
+"gocode.Type" o-- "gocode.TypeName"
+"gocode.TypeAlias" o-- "gocode.PackageSummary"
+"gocode.TypeAlias" o-- "gocode.Type"
+"gocode.TypeAlias" o-- "gocode.TypeAliasName"
+"gocode.TypeAliasList" o-- "gocode.TypeAlias"
+"gocode.typeConverter" o-- "gocode.PackageSummary"
+namespace gocode {
+    class "[]*Parameter" as []*Parameter << (s,  3cb371ff)  >> {
+    }
+}
+"gocode.[]*Parameter" #.. "gocode.Parameters"
+namespace gocode {
+    class "[]*ReturnValue" as []*ReturnValue << (s,  3cb371ff)  >> {
+    }
+}
+"gocode.[]*ReturnValue" #.. "gocode.ReturnValues"
+@enduml
