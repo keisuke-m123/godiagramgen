@@ -3,6 +3,29 @@
 skinparam class {
   attributeIconSize 8
 }
+namespace aliasmethods {
+    class Code << (S,Aquamarine) >> {
+        + AsInt() int
+
+    }
+    class Properties << (S,Aquamarine) >> {
+        + Copy() Properties
+
+    }
+    class StringList << (S,Aquamarine) >> {
+        + Add(s string) StringList
+
+    }
+    class aliasmethods.Code << (T, #FF7700) >>  {
+    }
+    class aliasmethods.Properties << (T, #FF7700) >>  {
+    }
+    class aliasmethods.StringList << (T, #FF7700) >>  {
+    }
+}
+
+
+
 namespace connectionlabels {
     interface AbstractInterface  {
         - interfaceFunction() bool
@@ -99,7 +122,10 @@ namespace testingsupport {
 
 "testingsupport.test""uses" o-- "testingsupport.TestComplicatedAlias"
 
+"__builtin__.int" #.. "alias of""aliasmethods.Code"
 "__builtin__.int" #.. "alias of""connectionlabels.AliasOfInt"
 "__builtin__.int" #.. "alias of""testingsupport.myInt"
+"aliasmethods.[]string" #.. "alias of""aliasmethods.StringList"
+"aliasmethods.map[string]interface{}" #.. "alias of""aliasmethods.Properties"
 "testingsupport.funcstringsBuilderbool" #.. "alias of""testingsupport.TestComplicatedAlias"
 @enduml

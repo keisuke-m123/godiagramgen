@@ -1,0 +1,27 @@
+@startuml
+namespace aliasmethods {
+    class Code << (S,Aquamarine) >> {
+        + AsInt() int
+
+    }
+    class Properties << (S,Aquamarine) >> {
+        + Copy() Properties
+
+    }
+    class StringList << (S,Aquamarine) >> {
+        + Add(s string) StringList
+
+    }
+    class aliasmethods.Code << (T, #FF7700) >>  {
+    }
+    class aliasmethods.Properties << (T, #FF7700) >>  {
+    }
+    class aliasmethods.StringList << (T, #FF7700) >>  {
+    }
+}
+
+
+"__builtin__.int" #.. "aliasmethods.Code"
+"aliasmethods.[]string" #.. "aliasmethods.StringList"
+"aliasmethods.map[string]interface{}" #.. "aliasmethods.Properties"
+@enduml
