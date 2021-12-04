@@ -257,7 +257,7 @@ func (p *ClassParser) parseFunctions(pkg *packages.Package) {
 			continue
 		}
 
-		recvTypeName := getFieldType(tFunc.Recv().Type().Underlying(), p.allImports)
+		recvTypeName := getFieldType(tFunc.Recv().Type(), p.allImports)
 		recvTypeName = replacePackageConstant(recvTypeName, "")
 		if recvTypeName[0] == "*"[0] {
 			recvTypeName = recvTypeName[1:]
@@ -475,7 +475,6 @@ func (p *ClassParser) renderStructure(structure *Struct, name string, str *LineS
 	case "alias":
 		sType = "<< (T, #FF7700) >> "
 		renderStructureType = "class"
-
 	}
 	str.WriteLineWithDepth(1, fmt.Sprintf(`%s %s %s {`, renderStructureType, name, sType))
 	p.renderStructFields(structure, privateFields, publicFields)

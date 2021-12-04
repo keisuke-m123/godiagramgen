@@ -231,7 +231,7 @@ func TestRenderStructure(t *testing.T) {
 	compositionBuilder := &LineStringBuilder{}
 	extendBuilder := &LineStringBuilder{}
 	aggregationsBuilder := &LineStringBuilder{}
-	parser.renderStructure(st, "main", "TestClass", lineBuilder, compositionBuilder, extendBuilder, aggregationsBuilder)
+	parser.renderStructure(st, "TestClass", lineBuilder, compositionBuilder, extendBuilder, aggregationsBuilder)
 	expectedLineBuilder := "    class TestClass << (S,Aquamarine) >> {\n        - privateField int\n\n        + PublicField error\n\n        - foo( int,  string) (error, int)\n\n        + Boo( string,  int) int\n\n    }\n"
 	if lineBuilder.String() != expectedLineBuilder {
 		t.Errorf("TestRenderStructure: Expected lineBuilder [%s] got [%s]", expectedLineBuilder, lineBuilder.String())
@@ -459,7 +459,7 @@ func TestNewClassDiagram(t *testing.T) {
 	}{
 		{
 			Name:          "Directory Missing not recursive",
-			ExpectedError: "err: chdir ./no_path: no such file or directory: stderr: ",
+			ExpectedError: "load packages failed: err: chdir ./no_path: no such file or directory: stderr: ",
 			Path:          "./no_path",
 			Recursive:     false,
 		},
@@ -586,7 +586,6 @@ func TestGetPackageName(t *testing.T) {
 
 func TestMultipleFolders(t *testing.T) {
 	parser, err := NewClassDiagram([]string{"../testingsupport/subfolder3", "../testingsupport/subfolder2"}, []string{}, false)
-
 	if err != nil {
 		t.Errorf("TestMultipleFolders: expected no errors, got %s", err.Error())
 		return
@@ -599,11 +598,29 @@ func TestMultipleFolders(t *testing.T) {
 	}
 	if string(result) != resultRender {
 		t.Errorf("TestMultipleFolders: Expected renders to be the same as %s , but got %s", result, resultRender)
+		testutil.LogDiff(t, string(result), resultRender)
+	}
+}
+
+func TestAliasMethods(t *testing.T) {
+	parser, err := NewClassDiagram([]string{"../testingsupport/aliasmethods"}, nil, false)
+	if err != nil {
+		t.Fatalf("TestAliasMethods: expected no errors, got %s", err)
+		return
+	}
+
+	resultRender := parser.Render()
+	result, err := ioutil.ReadFile("../testingsupport/aliasmethods.puml")
+	if err != nil {
+		t.Errorf("TestAliasMethods: expected no errors reading testing file, got %s", err)
+	}
+	if string(result) != resultRender {
+		t.Errorf("TestAliasMethods: expected renders to be the same as %s , but got %s", result, resultRender)
+		testutil.LogDiff(t, string(result), resultRender)
 	}
 }
 
 func TestIgnoreDirectories(t *testing.T) {
-
 	parser, err := NewClassDiagram([]string{"../testingsupport"}, []string{}, true)
 	if err != nil {
 		t.Errorf("TestIgnoreDirectories: expected no errors, got %s", err.Error())
