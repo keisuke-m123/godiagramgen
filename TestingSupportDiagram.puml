@@ -55,8 +55,15 @@ namespace parenthesizedtypedeclarations {
         + Foo()
 
     }
+    class defaultFoo << (S,Aquamarine) >> {
+    }
+    class parenthesizedtypedeclarations.defaultFoo << (S,Aquamarine) >> {
+        + Foo()
+
+    }
 }
 
+"parenthesizedtypedeclarations.Foo" <|-- "implements""parenthesizedtypedeclarations.defaultFoo"
 
 
 namespace renderingoptions {
@@ -105,6 +112,7 @@ namespace testingsupport {
     class test << (S,Aquamarine) >> {
         - field int
         - field2 TestComplicatedAlias
+        - foo parenthesizedtypedeclarations.Foo
 
         - test()
 
@@ -120,6 +128,7 @@ namespace testingsupport {
 
 "subfolder.test2" <|-- "implements""testingsupport.test"
 
+"testingsupport.test""uses" o-- "parenthesizedtypedeclarations.Foo"
 "testingsupport.test""uses" o-- "testingsupport.TestComplicatedAlias"
 
 "__builtin__.int" #.. "alias of""aliasmethods.Code"

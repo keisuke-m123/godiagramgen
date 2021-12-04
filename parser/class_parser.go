@@ -424,7 +424,7 @@ func (p *ClassParser) renderStructures(pack string, structures map[string]*Struc
 			str.WriteLineWithDepth(2, aliasComplexNameComment)
 			str.WriteLineWithDepth(1, "}")
 		}
-		str.WriteLineWithDepth(0, fmt.Sprintf(`}`))
+		str.WriteLineWithDepth(0, `}`)
 		if p.renderingOptions.Compositions {
 			str.WriteLineWithDepth(0, composition.String())
 		}
@@ -494,7 +494,7 @@ func (p *ClassParser) renderStructure(structure *Struct, name string, str *LineS
 	if publicMethods.Len() > 0 {
 		str.WriteLineWithDepth(0, publicMethods.String())
 	}
-	str.WriteLineWithDepth(1, fmt.Sprintf(`}`))
+	str.WriteLineWithDepth(1, `}`)
 }
 
 func (p *ClassParser) renderCompositions(structure *Struct, name string, composition *LineStringBuilder) {
@@ -571,7 +571,11 @@ func (p *ClassParser) renderExtends(structure *Struct, name string, extends *Lin
 		if p.renderingOptions.ConnectionLabels {
 			implementString = implements
 		}
-		c = fmt.Sprintf(`"%s" <|-- %s"%s.%s"`, c, implementString, structure.PackageName, name)
+		if strings.Contains(name, ".") {
+			c = fmt.Sprintf(`"%s" <|-- %s"%s"`, c, implementString, name)
+		} else {
+			c = fmt.Sprintf(`"%s" <|-- %s"%s.%s"`, c, implementString, structure.PackageName, name)
+		}
 		orderedExtends = append(orderedExtends, c)
 	}
 	sort.Strings(orderedExtends)
@@ -694,7 +698,7 @@ func (p *ClassParser) SetRenderingOptions(ro map[RenderingOption]interface{}) er
 		case RenderTheme:
 			p.renderingOptions.Theme = val.(string)
 		default:
-			return fmt.Errorf("Invalid Rendering option %v", option)
+			return fmt.Errorf("invalid Rendering option %v", option)
 		}
 	}
 	return nil
