@@ -552,14 +552,16 @@ func TestNewClassDiagram(t *testing.T) {
 func TestRender(t *testing.T) {
 	parser, err := NewClassDiagram([]string{"../testingsupport"}, []string{}, false)
 	if err != nil {
-		t.Errorf("TestRender: expected no errors, got %s", err.Error())
-		return
+		t.Fatalf("TestRender: expected no errors, got %s", err.Error())
 	}
-	parser.SetRenderingOptions(map[RenderingOption]interface{}{
+
+	if err := parser.SetRenderingOptions(map[RenderingOption]interface{}{
 		RenderTitle:          "Test Title",
-		RenderNotes:          "Notes Example 1\nNotes Example 1 continues\nNotes Example 2",
+		RenderNotes:          "<b><u>Notes</u></b>\nExample 1\nExample 1 continues\nExample 2",
 		RenderPrivateMembers: true,
-	})
+	}); err != nil {
+		t.Fatalf("TestRender: expected no errors, got %s", err.Error())
+	}
 
 	resultRender := parser.Render()
 	result, err := ioutil.ReadFile("../testingsupport/testingsupport.puml")
@@ -567,7 +569,6 @@ func TestRender(t *testing.T) {
 		t.Errorf("TestRender: expected no errors reading testing file, got %s", err.Error())
 	}
 	if string(result) != resultRender {
-		// FIXME: test
 		t.Errorf("TestRender: Expected renders to be the same as %s , but got %s", result, resultRender)
 		testutil.LogDiff(t, string(result), resultRender)
 	}
@@ -585,14 +586,18 @@ func TestGetPackageName(t *testing.T) {
 }
 
 func TestMultipleFolders(t *testing.T) {
-	parser, err := NewClassDiagram([]string{"../testingsupport/subfolder3", "../testingsupport/subfolder2"}, []string{}, false)
+	parser, err := NewClassDiagram([]string{"../testingsupport/subfolder", "../testingsupport/subfolder2", "../testingsupport/subfolder3"}, []string{}, false)
 	if err != nil {
 		t.Errorf("TestMultipleFolders: expected no errors, got %s", err.Error())
 		return
 	}
-
+	if err := parser.SetRenderingOptions(map[RenderingOption]interface{}{
+		RenderAggregations: true,
+	}); err != nil {
+		t.Fatalf("TestRender: expected no errors, got %s", err.Error())
+	}
 	resultRender := parser.Render()
-	result, err := ioutil.ReadFile("../testingsupport/subfolder1-2.puml")
+	result, err := ioutil.ReadFile("../testingsupport/subfolder1-3.puml")
 	if err != nil {
 		t.Errorf("TestMultipleFolders: expected no errors reading testing file, got %s", err.Error())
 	}
@@ -616,6 +621,29 @@ func TestAliasMethods(t *testing.T) {
 	}
 	if string(result) != resultRender {
 		t.Errorf("TestAliasMethods: expected renders to be the same as %s , but got %s", result, resultRender)
+		testutil.LogDiff(t, string(result), resultRender)
+	}
+}
+
+func TestTestingSupportAndParametrizedTypeDeclarations(t *testing.T) {
+	parser, err := NewClassDiagram([]string{"../testingsupport", "../testingsupport/parenthesizedtypedeclarations"}, nil, false)
+	if err != nil {
+		t.Fatalf("TestTestingSupportAndParametrizedTypeDeclarations: expected no errors, got %s", err)
+		return
+	}
+	if err := parser.SetRenderingOptions(map[RenderingOption]interface{}{
+		RenderPrivateMembers: true,
+		RenderAggregations:   true,
+	}); err != nil {
+		t.Fatalf("TestRender: expected no errors, got %s", err.Error())
+	}
+	resultRender := parser.Render()
+	result, err := ioutil.ReadFile("../testingsupport/testingsupport-parenthesizedtypedeclarations.puml")
+	if err != nil {
+		t.Errorf("TestTestingSupportAndParametrizedTypeDeclarations: expected no errors reading testing file, got %s", err)
+	}
+	if string(result) != resultRender {
+		t.Errorf("TestTestingSupportAndParametrizedTypeDeclarations: expected renders to be the same as %s , but got %s", result, resultRender)
 		testutil.LogDiff(t, string(result), resultRender)
 	}
 }
@@ -727,7 +755,6 @@ func TestSetRenderingOptions(t *testing.T) {
 
 func TestRenderCompositionFromInterfaces(t *testing.T) {
 	parser, err := NewClassDiagram([]string{"../testingsupport/subfolder"}, []string{}, false)
-
 	if err != nil {
 		t.Errorf("TestIgnoreDirectories: expected no errors, got %s", err.Error())
 		return
@@ -737,103 +764,6 @@ func TestRenderCompositionFromInterfaces(t *testing.T) {
 		t.Errorf("TestRenderCompositionFromInterfaces: expected st to have a composition dependency to subfolder.TestInterfaceAsField")
 	}
 }
-
-//func TestGetBasic(t *testing.T) {
-//	tt := []struct {
-//		Name           string
-//		Input          ast.Expr
-//		ExpecterResult string
-//	}{
-//		{
-//			Name: "[]int",
-//			Input: &ast.ArrayType{
-//				Elt: &ast.Ident{
-//					Name: "int",
-//				},
-//			},
-//			ExpecterResult: "int",
-//		},
-//		{
-//			Name: "Selector expression TestClass",
-//			Input: &ast.SelectorExpr{
-//				X: &ast.Ident{
-//					Name: "puml",
-//				},
-//				Sel: &ast.Ident{
-//					Name: "TestClass",
-//				},
-//			},
-//			ExpecterResult: "puml.TestClass",
-//		},
-//		{
-//			Name: "map[string]int",
-//			Input: &ast.MapType{
-//				Key: &ast.Ident{
-//					Name: "string",
-//				},
-//				Value: &ast.Ident{
-//					Name: "int",
-//				},
-//			},
-//			ExpecterResult: "int",
-//		},
-//		{
-//			Name: "chan int",
-//			Input: &ast.ChanType{
-//				Value: &ast.Ident{
-//					Name: "int",
-//				},
-//			},
-//			ExpecterResult: "int",
-//		},
-//		{
-//			Name: "chan int",
-//			Input: &ast.StructType{
-//				Fields: &ast.FieldList{
-//					List: []*ast.Field{
-//						{
-//							Type: &ast.Ident{
-//								Name: "int",
-//							},
-//						},
-//						{
-//							Type: &ast.Ident{
-//								Name: "string",
-//							},
-//						},
-//					},
-//				},
-//			},
-//			ExpecterResult: "<font color=blue>struct</font>{int, string}",
-//		},
-//		{
-//			Name: "*int",
-//			Input: &ast.StarExpr{
-//				X: &ast.Ident{
-//					Name: "int",
-//				},
-//			},
-//			ExpecterResult: "int",
-//		},
-//		{
-//			Name: "...string",
-//			Input: &ast.Ellipsis{
-//				Elt: &ast.Ident{
-//					Name: "string",
-//				},
-//			},
-//			ExpecterResult: "string",
-//		},
-//	}
-//	for _, tc := range tt {
-//		t.Run(tc.Name, func(t *testing.T) {
-//			basicType := getFieldType(getBasicType(tc.Input), map[string]string{})
-//			if basicType != tc.ExpecterResult {
-//				t.Errorf("Expected %s got %s", tc.ExpecterResult, basicType)
-//			}
-//		})
-//	}
-//}
 
 func TestRenderingOptions(t *testing.T) {
 	tt := []struct {
@@ -1032,25 +962,14 @@ func TestGenerateRenamedStructName(t *testing.T) {
 	}
 }
 
-//func TestClassParser_handleFuncDecl(t *testing.T) {
-//	p := &ClassParser{}
-//	p.handleFuncDecl(&ast.FuncDecl{
-//		Recv: &ast.FieldList{
-//			List: nil,
-//		},
-//	})
-//	if len(p.allStructs) != 0 {
-//		t.Error("expecting no structs to be created")
-//	}
-//}
-
 func TestParametrizedTypeDeclarations(t *testing.T) {
 	parser, err := NewClassDiagram([]string{"../testingsupport/parenthesizedtypedeclarations"}, []string{}, false)
 	if err != nil {
-		t.Errorf("TestConnectionLabelsRendering: expected no error but got %s", err.Error())
-		return
+		t.Fatalf("TestConnectionLabelsRendering: expected no error but got %s", err.Error())
 	}
-	parser.SetRenderingOptions(map[RenderingOption]interface{}{})
+	if err := parser.SetRenderingOptions(map[RenderingOption]interface{}{}); err != nil {
+		t.Fatalf("TestConnectionLabelsRendering: expected no error but got %s", err.Error())
+	}
 	result := parser.Render()
 	expectedResult := `@startuml
 namespace parenthesizedtypedeclarations {
@@ -1062,8 +981,13 @@ namespace parenthesizedtypedeclarations {
         + Foo()
 
     }
+    class defaultFoo << (S,Aquamarine) >> {
+        + Foo()
+
+    }
 }
 
+"parenthesizedtypedeclarations.Foo" <|-- "parenthesizedtypedeclarations.defaultFoo"
 
 @enduml
 `

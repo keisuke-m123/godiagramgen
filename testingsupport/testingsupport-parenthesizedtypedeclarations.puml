@@ -1,11 +1,24 @@
 @startuml
-title Test Title
-legend
-<b><u>Notes</u></b>
-Example 1
-Example 1 continues
-Example 2
-end legend
+namespace parenthesizedtypedeclarations {
+    interface Bar  {
+        + Bar()
+
+    }
+    interface Foo  {
+        + Foo()
+
+    }
+    class defaultFoo << (S,Aquamarine) >> {
+    }
+    class parenthesizedtypedeclarations.defaultFoo << (S,Aquamarine) >> {
+        + Foo()
+
+    }
+}
+
+"parenthesizedtypedeclarations.Foo" <|-- "parenthesizedtypedeclarations.defaultFoo"
+
+
 namespace testingsupport {
     class test << (S,Aquamarine) >> {
         - field int
@@ -24,6 +37,9 @@ namespace testingsupport {
     }
 }
 
+
+"testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
+"testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
 
 "__builtin__.int" #.. "testingsupport.myInt"
 "testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"

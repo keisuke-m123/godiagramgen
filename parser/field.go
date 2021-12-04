@@ -100,11 +100,9 @@ func getFuncType(t *types.Signature, imports map[string]string) string {
 	for _, pa := range function.Parameters {
 		params = append(params, pa.Type)
 	}
+
 	returns := ""
-	returnList := make([]string, 0)
-	for _, re := range function.ReturnValues {
-		returnList = append(returnList, re)
-	}
+	returnList := append([]string{}, function.ReturnValues...)
 	if len(returnList) > 1 {
 		returns = fmt.Sprintf("(%s)", strings.Join(returnList, ", "))
 	} else {
