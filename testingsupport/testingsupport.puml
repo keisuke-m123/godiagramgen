@@ -7,24 +7,30 @@ Example 1 continues
 Example 2
 end legend
 namespace testingsupport {
-    class test << (S,Aquamarine) >> {
+    class "test"  << (S,  7fffd4ff)  >> {
         - field int
         - field2 TestComplicatedAlias
         - foo parenthesizedtypedeclarations.Foo
-
-        - test()
-
+        - test() 
     }
-    class testingsupport.TestComplicatedAlias << (T, #FF7700) >>  {
+    interface testInterface {
+        - test() 
     }
-    class testingsupport.myInt << (T, #FF7700) >>  {
+    class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
     }
-    class "func(strings.Builder) bool" as funcstringsBuilderbool {
-        'This class was created so that we can correctly have an alias pointing to this name. Since it contains dots that can break namespaces
+    class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
     }
 }
-
-
-"__builtin__.int" #.. "testingsupport.myInt"
+"testingsupport.testInterface" <|-- "testingsupport.test"
+"testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
+"testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "func(strings.Builder) bool" as funcstringsBuilderbool << (f,  3cb371ff)  >> {
+    }
+}
 "testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "aliasString"  << (T,  eddc44ff) alias of __string__ >> {
+    }
+}
 @enduml

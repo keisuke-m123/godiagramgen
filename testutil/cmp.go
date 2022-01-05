@@ -1,13 +1,14 @@
 package testutil
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 )
 
-func LogDiff(t *testing.T, want interface{}, got interface{}) {
+func Diff(t *testing.T, want interface{}, got interface{}) string {
 	t.Helper()
 
-	t.Logf("mismatch (-want +got):\n%s", cmp.Diff(want, got))
+	return fmt.Sprintf("mismatch (-want +got):\n%s", cmp.Diff(want, got))
 }

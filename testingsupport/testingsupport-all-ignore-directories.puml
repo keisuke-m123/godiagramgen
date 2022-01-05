@@ -1,4 +1,25 @@
 @startuml
+namespace aliasmethods {
+    class "Code"  << (D,  ff7700ff) type of __int__ >> {
+        + AsInt() int
+    }
+    class "Properties"  << (D,  ff7700ff)  >> {
+        + Copy() Properties
+    }
+    class "StringList"  << (D,  ff7700ff)  >> {
+        + Add(s string) StringList
+    }
+}
+namespace aliasmethods {
+    class "map[string]interface{}" as mapstringinterface << (m,  3cb371ff)  >> {
+    }
+}
+"aliasmethods.mapstringinterface" #.. "aliasmethods.Properties"
+namespace aliasmethods {
+    class "[]string" as string << (s,  3cb371ff)  >> {
+    }
+}
+"aliasmethods.string" #.. "aliasmethods.StringList"
 namespace parenthesizedtypedeclarations {
     class "defaultFoo"  << (S,  7fffd4ff)  >> {
         + Foo() 
@@ -11,6 +32,17 @@ namespace parenthesizedtypedeclarations {
     }
 }
 "parenthesizedtypedeclarations.Foo" <|-- "parenthesizedtypedeclarations.defaultFoo"
+namespace renderingoptions {
+    class "Test"  << (S,  7fffd4ff)  >> {
+        - integer int
+        - function() 
+    }
+}
+namespace subfolder3 {
+    interface SubfolderInterface {
+        + SubfolderFunction(bool, int) bool
+    }
+}
 namespace testingsupport {
     class "test"  << (S,  7fffd4ff)  >> {
         - field int
