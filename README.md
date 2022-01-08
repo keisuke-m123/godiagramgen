@@ -4,6 +4,8 @@
 [![codecov](https://codecov.io/gh/keisuke-m123/godiagramgen/branch/main/graph/badge.svg)](https://codecov.io/gh/keisuke-m123/godiagramgen)
 [![ci workflow](https://github.com/keisuke-m123/godiagramgen/actions/workflows/ci.yml/badge.svg)](https://github.com/keisuke-m123/godiagramgen/actions/workflows/ci.yml)
 
+work in progress
+
 GoDiagramGeneratorはGo言語でのコード設計を支援するツールです。 Goコードから図を生成します。
 
 ## インストール
@@ -40,11 +42,11 @@ godiagramgen package --output=./package-diagram.puml --theme=reddress-darkorange
 # 各pumlファイルを更新します
 # これらの図はテストに使用されます
 make install
-make renderer
+make render
 # テストを実行します
 make test
 # 静的解析
 make check
 ```
 
-クラス図生成について https://github.com/jfeliu007/goplantuml を参考にしました。
+クラス図生成について https://github.com/jfeliu007/goplantuml を参考にしています。
