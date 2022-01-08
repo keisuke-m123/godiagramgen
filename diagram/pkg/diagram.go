@@ -3,7 +3,7 @@ package pkg
 import (
 	"fmt"
 
-	"github.com/keisuke-m123/godiagramgen/gocode"
+	"github.com/keisuke-m123/goanalyzer/gocode"
 	"github.com/spf13/afero"
 )
 

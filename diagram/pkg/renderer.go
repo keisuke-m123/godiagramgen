@@ -3,7 +3,7 @@ package pkg
 import (
 	"strings"
 
-	"github.com/keisuke-m123/godiagramgen/gocode"
+	"github.com/keisuke-m123/goanalyzer/gocode"
 	"github.com/keisuke-m123/godiagramgen/plantuml"
 )
 

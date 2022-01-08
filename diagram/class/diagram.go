@@ -3,8 +3,8 @@ package class
 import (
 	"fmt"
 
+	"github.com/keisuke-m123/goanalyzer/gocode"
 	"github.com/keisuke-m123/godiagramgen/diagram/class/renderer"
-	"github.com/keisuke-m123/godiagramgen/gocode"
 	"github.com/keisuke-m123/godiagramgen/plantuml"
 	"github.com/spf13/afero"
 )

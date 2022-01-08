@@ -9,7 +9,7 @@ install:
 
 .PHONY: render
 render:
-	godiagramgen class --recursive --output=class-diagram.puml --theme=reddress-darkorange ./gocode
+	godiagramgen class --recursive --output=class-diagram.puml --theme=reddress-darkorange .
 	godiagramgen package --output=./package-diagram.puml --theme=reddress-darkorange --ignore=./testingsupport .
 	godiagramgen class --recursive --output=./testingsupport/testingsupport-all.puml --theme=reddress-darkorange ./testingsupport
 	godiagramgen class --recursive --output=./testingsupport/testingsupport-all-ignore-directories.puml --ignore=./testingsupport/subfolder,./testingsupport/subfolder2,./testingsupport/connectionlabels ./testingsupport

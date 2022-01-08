@@ -72,14 +72,6 @@ namespace githubcom {
 namespace githubcom {
     namespace keisuke-m123 {
         namespace godiagramgen {
-            namespace gocode {
-            }
-        }
-    }
-}
-namespace githubcom {
-    namespace keisuke-m123 {
-        namespace godiagramgen {
             namespace plantuml {
             }
         }
@@ -99,10 +91,7 @@ namespace githubcom {
 "githubcom.keisuke-m123.godiagramgen.diagram.class.renderer" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.classdiagram"
 "githubcom.keisuke-m123.godiagramgen.diagram.pkg" <-- "githubcom.keisuke-m123.godiagramgen.cmd.godiagramgen.pkgdiagram"
 "githubcom.keisuke-m123.godiagramgen.diagram.class.renderer" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class"
-"githubcom.keisuke-m123.godiagramgen.gocode" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class"
 "githubcom.keisuke-m123.godiagramgen.plantuml" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class"
-"githubcom.keisuke-m123.godiagramgen.gocode" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class.renderer"
 "githubcom.keisuke-m123.godiagramgen.plantuml" <-- "githubcom.keisuke-m123.godiagramgen.diagram.class.renderer"
-"githubcom.keisuke-m123.godiagramgen.gocode" <-- "githubcom.keisuke-m123.godiagramgen.diagram.pkg"
 "githubcom.keisuke-m123.godiagramgen.plantuml" <-- "githubcom.keisuke-m123.godiagramgen.diagram.pkg"
 @enduml

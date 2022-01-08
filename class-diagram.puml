@@ -3,398 +3,397 @@
 skinparam class {
     attributeIconSize 8
 }
-namespace gocode {
-    class "DefinedType"  << (S,  7fffd4ff)  >> {
-        - name DefinedTypeName
-        - pkgSummary *PackageSummary
-        - typ *Type
-        - methods *FunctionList
-        + Methods() []*Function
-        + Name() DefinedTypeName
-        + PackageSummary() *PackageSummary
-        + Type() *Type
+namespace aliasmethods {
+    class "Code"  << (D,  ff7700ff) type of __int__ >> {
+        + AsInt() int
     }
-    class "DefinedTypeList"  << (S,  7fffd4ff)  >> {
-        - definedTypes []*DefinedType
-        - asSlice() []*DefinedType
+    class "Properties"  << (D,  ff7700ff)  >> {
+        + Copy() Properties
     }
-    class "Embed"  << (S,  7fffd4ff)  >> {
-        - typ *Type
-        + Type() *Type
+    class "StringList"  << (D,  ff7700ff)  >> {
+        + Add(s string) StringList
     }
-    class "EmbedList"  << (S,  7fffd4ff)  >> {
-        - embeds []*Embed
-        - asSlice() []*Embed
+}
+namespace aliasmethods {
+    class "map[string]interface{}" as mapstringinterface << (m,  3cb371ff)  >> {
     }
-    class "Field"  << (S,  7fffd4ff)  >> {
-        - goVar *Var
-        - name FieldName
-        - pkgSummary *PackageSummary
-        - typ *Type
-        + Embedded() bool
-        + Name() FieldName
-        + PackageSummary() *PackageSummary
-        + Type() *Type
+}
+"aliasmethods.mapstringinterface" #.. "aliasmethods.Properties"
+namespace aliasmethods {
+    class "[]string" as string << (s,  3cb371ff)  >> {
     }
-    class "FieldList"  << (S,  7fffd4ff)  >> {
-        - fields []*Field
-        - asSlice() []*Field
+}
+"aliasmethods.string" #.. "aliasmethods.StringList"
+namespace class {
+    class "Diagram"  << (S,  7fffd4ff)  >> {
+        - renderer *Renderer
+        + Render() *Result
     }
-    class "Function"  << (S,  7fffd4ff)  >> {
-        - name FunctionName
-        - parameters Parameters
-        - returnValues ReturnValues
-        + Name() FunctionName
-        + Parameters() Parameters
-        + ReturnValues() ReturnValues
+}
+"class.Diagram" o-- "renderer.Renderer"
+namespace classdiagram {
+    class "FlagSet"  << (S,  7fffd4ff)  >> {
+        - set *FlagSet
+        - values FlagValues
+        + InitializeFlags() 
+        + Values() FlagValues
     }
-    class "FunctionList"  << (S,  7fffd4ff)  >> {
-        - functions []*Function
-        - asSlice() []*Function
-    }
-    class "Import"  << (S,  7fffd4ff)  >> {
-        - alias ImportAlias
-        - pkgSummary *PackageSummary
-        + AliasName() ImportAlias
-        + HasAliasName() bool
-        + PackageSummary() *PackageSummary
-    }
-    class "ImportList"  << (S,  7fffd4ff)  >> {
-        - imports map[PackageName]*Import
-        + Get(pkgName PackageName) (*Import, bool)
-        + Len() int
-        - asSlice() []*Import
-    }
-    class "Interface"  << (S,  7fffd4ff)  >> {
-        - goInterface *Interface
-        - name InterfaceName
-        - pkgSummary *PackageSummary
-        - methods *FunctionList
-        - embeds *EmbedList
-        + Embeds() []*Embed
-        + Methods() []*Function
-        + Name() InterfaceName
-        + PackageInterfaceName() PackageInterfaceName
-        + PackageSummary() *PackageSummary
-    }
-    class "InterfaceList"  << (S,  7fffd4ff)  >> {
-        - interfaces []*Interface
-        - asSlice() []*Interface
-    }
-    class "LoadOptions"  << (S,  7fffd4ff)  >> {
-        + FileSystem afero.Fs
-        + Directories []string
-        + IgnoredDirectories []string
+    class "FlagValues"  << (S,  7fffd4ff)  >> {
+        + Ignore string
+        + Title string
+        + Notes string
+        + Output string
+        + Theme string
         + Recursive bool
     }
-    class "Package"  << (S,  7fffd4ff)  >> {
-        - summary *PackageSummary
-        - detail *PackageDetail
-        + Detail() *PackageDetail
-        + Summary() *PackageSummary
+}
+"classdiagram.FlagSet" o-- "pflag.FlagSet"
+"classdiagram.FlagSet" o-- "classdiagram.FlagValues"
+namespace connectionlabels {
+    class "ImplementsAbstractInterface"  << (S,  7fffd4ff)  >> {
+        + AliasOfInt AliasOfInt
+        + PublicUse AbstractInterface
+        - interfaceFunction() bool
     }
-    class "PackageDefinedTypeMap"  << (S,  7fffd4ff)  >> {
-        - m map[PackageName]map[DefinedTypeName]*DefinedType
-        + Get(pkgName PackageName, definedType DefinedTypeName) (*DefinedType, bool)
-        + PackageDefinedTypes(pkgName PackageName) []*DefinedType
-        - put(definedType *DefinedType) 
+    interface AbstractInterface {
+        - interfaceFunction() bool
     }
-    class "PackageDetail"  << (S,  7fffd4ff)  >> {
-        - imports *ImportList
-        - structs *StructList
-        - interfaces *InterfaceList
-        - typeAliases *TypeAliasList
-        - definedTypes *DefinedTypeList
-        + DefinedTypes() []*DefinedType
-        + Imports() []*Import
-        + Interfaces() []*Interface
-        + Structs() []*Struct
-        + TypeAliases() []*TypeAlias
+    class "AliasOfInt"  << (D,  ff7700ff) type of __int__ >> {
     }
-    class "PackageGraph"  << (S,  7fffd4ff)  >> {
-        - graph map[PackagePath][]*PackageSummary
-        + SortedImportPackagePaths(pkgPath PackagePath) []*PackageSummary
-        + SortedPackagePaths() []PackagePath
+}
+"connectionlabels.AliasOfInt" *-- "connectionlabels.ImplementsAbstractInterface"
+"connectionlabels.AbstractInterface" <|-- "connectionlabels.ImplementsAbstractInterface"
+"connectionlabels.ImplementsAbstractInterface" o-- "connectionlabels.AbstractInterface"
+namespace main {
+}
+namespace parenthesizedtypedeclarations {
+    class "defaultFoo"  << (S,  7fffd4ff)  >> {
+        + Foo() 
     }
-    class "PackageInterfaceMap"  << (S,  7fffd4ff)  >> {
-        - m map[PackageName]map[InterfaceName]*Interface
-        + Contains(pkgName PackageName, interfaceName InterfaceName) bool
-        + Get(pkgName PackageName, interfaceName InterfaceName) (*Interface, bool)
-        + InterfaceAll() []*Interface
-        + PackageInterfaceNames() []PackageInterfaceName
-        + PackageInterfaces(pkgName PackageName) []*Interface
-        + PackageNames() []PackageName
-        - put(iface *Interface) 
+    interface Bar {
+        + Bar() 
     }
-    class "PackageMap"  << (S,  7fffd4ff)  >> {
-        - m map[PackagePath]*Package
-        + AsSlice() []*Package
-        + Contains(pkgPath PackagePath) bool
-        - add(pkg *Package) 
+    interface Foo {
+        + Foo() 
     }
-    class "PackageStructureMap"  << (S,  7fffd4ff)  >> {
-        - m map[PackageName]map[StructName]*Struct
-        + Contains(pkgName PackageName, structName StructName) bool
-        + Get(pkgName PackageName, structName StructName) (*Struct, bool)
-        + PackageNames() []PackageName
-        + PackageStructNames() []PackageStructName
-        + PackageStructs(pkgName PackageName) []*Struct
-        + StructAll() []*Struct
-        - put(s *Struct) 
+}
+"parenthesizedtypedeclarations.Foo" <|-- "parenthesizedtypedeclarations.defaultFoo"
+namespace pkg {
+    class "Diagram"  << (S,  7fffd4ff)  >> {
+        - renderer *renderer
+        + Render() string
     }
-    class "PackageSummary"  << (S,  7fffd4ff)  >> {
-        - name PackageName
-        - path PackagePath
-        + Equal(other *PackageSummary) bool
-        + Name() PackageName
-        + Path() PackagePath
+    class "renderer"  << (S,  7fffd4ff)  >> {
+        - theme string
+        - pkgGraph *PackageGraph
+        - buildNamespace(pkgPath PackagePath) Element
+        - namespacePath(pkgPath PackagePath) string
+        - relationTargetName(pkgPath PackagePath) string
+        - render() string
     }
-    class "PackageTypeAliasMap"  << (S,  7fffd4ff)  >> {
-        - m map[PackageName]map[TypeAliasName]*TypeAlias
-        + AliasAll() []*TypeAlias
-        + Contains(pkgName PackageName, aliasName TypeAliasName) bool
-        + Get(pkgName PackageName, aliasName TypeAliasName) (*TypeAlias, bool)
-        + PackageAliasNames() []PackageTypeAliasName
-        + PackageAliases(pkgName PackageName) []*TypeAlias
-        + PackageNames() []PackageName
-        - put(al *TypeAlias) 
+}
+"pkg.Diagram" o-- "pkg.renderer"
+"pkg.renderer" o-- "gocode.PackageGraph"
+namespace pkgdiagram {
+    class "FlagSet"  << (S,  7fffd4ff)  >> {
+        - set *FlagSet
+        - values FlagValues
+        + InitializeFlags() 
+        + Values() FlagValues
     }
-    class "Parameter"  << (S,  7fffd4ff)  >> {
-        - name string
-        - typ *Type
-        + Name() string
-        + Type() *Type
+    class "FlagValues"  << (S,  7fffd4ff)  >> {
+        + Ignore string
+        + Output string
+        + Theme string
+        + Recursive bool
     }
-    class "Relations"  << (S,  7fffd4ff)  >> {
-        - packages *PackageMap
-        - structs *PackageStructureMap
-        - interfaces *PackageInterfaceMap
-        - typeAliases *PackageTypeAliasMap
-        - definedTypes *PackageDefinedTypeMap
-        + DefinedTypes() *PackageDefinedTypeMap
-        + GeneratePackageGraph() *PackageGraph
-        + Interfaces() *PackageInterfaceMap
-        + Packages() *PackageMap
-        + Structs() *PackageStructureMap
-        + TypeAliases() *PackageTypeAliasMap
-        - load(options *LoadOptions) error
-        - parseDirectory(directoryPath string) error
-        - registerDefinedTypes(pkg *Package) 
-        - registerInterfaces(pkg *Package) 
-        - registerRelations() 
-        - registerStructs(pkg *Package) 
-        - registerTypeAliases(pkg *Package) 
+}
+"pkgdiagram.FlagSet" o-- "pflag.FlagSet"
+"pkgdiagram.FlagSet" o-- "pkgdiagram.FlagValues"
+namespace plantuml {
+    class "ClassOptions"  << (S,  7fffd4ff)  >> {
+        + As string
+        + Spot Spot
+        + Stereotype Stereotype
+    }
+    class "Color"  << (S,  7fffd4ff)  >> {
+        - r uint8
+        - g uint8
+        - b uint8
+        - a uint8
+        + HexRGBA() string
+    }
+    class "ElementStore"  << (S,  7fffd4ff)  >> {
+        - elements []Element
+        + Add(es []Element) 
+        + AsSlice() []Element
+        + Merge(es *ElementStore) *ElementStore
+    }
+    class "LineStringBuilder"  << (S,  7fffd4ff)  >> {
+        + Builder strings.Builder
+        + WriteLineWithDepth(depth int, str string) 
+    }
+    class "NamespaceOptions"  << (S,  7fffd4ff)  >> {
+        + As string
+    }
+    class "Param"  << (S,  7fffd4ff)  >> {
+        + Name string
+        + Type string
+        - toString() string
+    }
+    class "RelationTarget"  << (S,  7fffd4ff)  >> {
+        + Namespace string
+        + Name string
+        + String() string
+    }
+    class "Result"  << (S,  7fffd4ff)  >> {
+        - builder *LineStringBuilder
+        + String() string
     }
     class "ReturnValue"  << (S,  7fffd4ff)  >> {
+        + Name string
+        + Type string
+        - toString() string
+    }
+    class "Spot"  << (S,  7fffd4ff)  >> {
+        + Name rune
+        + Color *Color
+        - build() string
+    }
+    class "class"  << (S,  7fffd4ff)  >> {
         - name string
-        - typ *Type
-        + Name() string
-        + Type() *Type
+        - elements []Element
+        - as string
+        - stereotype Stereotype
+        - spot Spot
+        + Write(builder *LineStringBuilder, indent int) 
+        - buildStereotype() string
     }
-    class "Struct"  << (S,  7fffd4ff)  >> {
-        - goType types.Type
-        - structName StructName
-        - pkgSummary *PackageSummary
-        - typ *Type
-        - methods *FunctionList
-        - fields *FieldList
-        - implements *PackageInterfaceMap
-        + Fields() []*Field
-        + ImplementInterfaces() *PackageInterfaceMap
-        + Implements(i *Interface) bool
-        + Methods() []*Function
-        + Name() StructName
-        + PackageStructName() PackageStructName
-        + PackageSummary() *PackageSummary
-        - addInterfaceIfImplements(i *Interface) 
+    class "field"  << (S,  7fffd4ff)  >> {
+        - accessModifier AccessModifier
+        - name string
+        - typ string
+        + Write(builder *LineStringBuilder, indent int) 
     }
-    class "StructList"  << (S,  7fffd4ff)  >> {
-        - structs []*Struct
-        - asSlice() []*Struct
+    class "iface"  << (S,  7fffd4ff)  >> {
+        - name string
+        - elements []Element
+        + Write(builder *LineStringBuilder, indent int) 
     }
-    class "Type"  << (S,  7fffd4ff)  >> {
-        - goType types.Type
-        - typeName TypeName
-        - relativeFullTypeName RelativeFullTypeName
-        - pkgSummary *PackageSummary
-        - fundamentalTypes []*Type
-        + Builtin() bool
-        + ContainsBuiltinInFundamentalTypes() bool
-        + FundamentalTypes() []*Type
-        + PackageSummary() *PackageSummary
-        + RelativeFullTypeName() RelativeFullTypeName
-        + TypeName() TypeName
-        - resetFullTypeName(currentPkgSummary *PackageSummary, typePackageSummary *PackageSummary) 
+    class "legend"  << (S,  7fffd4ff)  >> {
+        - note string
+        + Write(builder *LineStringBuilder, indent int) 
     }
-    class "TypeAlias"  << (S,  7fffd4ff)  >> {
-        - name TypeAliasName
-        - pkgSummary *PackageSummary
-        - typ *Type
-        + Name() TypeAliasName
-        + PackageAliasName() PackageTypeAliasName
-        + PackageSummary() *PackageSummary
-        + Type() *Type
+    class "method"  << (S,  7fffd4ff)  >> {
+        - accessModifier AccessModifier
+        - name string
+        - parameters Params
+        - returnValues ReturnValues
+        + Write(builder *LineStringBuilder, indent int) 
+        - buildParameters() string
+        - buildReturnValues() string
     }
-    class "TypeAliasList"  << (S,  7fffd4ff)  >> {
-        - aliases []*TypeAlias
-        - asSlice() []*TypeAlias
+    class "namespace"  << (S,  7fffd4ff)  >> {
+        - val string
+        - as string
+        - elements []Element
+        + Write(builder *LineStringBuilder, indent int) 
     }
-    class "typeConverter"  << (S,  7fffd4ff)  >> {
-        - currentPkgSummary *PackageSummary
-        + _typeName(typ Type) string
-        - fundamentalTypes(typ Type) []*Type
-        - signatureFundamentalTypes(t *Signature) []*Type
-        - typeName(typ Type) TypeName
-        - typeNameArray(t *Array) string
-        - typeNameBasic(t *Basic) string
-        - typeNameChan(t *Chan) string
-        - typeNameInterface(t *Interface) string
-        - typeNameMap(t *Map) string
-        - typeNameNamed(t *Named) string
-        - typeNamePointer(t *Pointer) string
-        - typeNameSignature(t *Signature) string
-        - typeNameSlice(t *Slice) string
-        - typeNameStruct(t *Struct) string
+    class "relation"  << (S,  7fffd4ff)  >> {
+        - from RelationTarget
+        - to RelationTarget
+        - relationType RelationType
+        + Write(builder *LineStringBuilder, indent int) 
+        - buildRelationType() string
     }
-    class "DefinedTypeName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
+    class "theme"  << (S,  7fffd4ff)  >> {
+        - val string
+        + Write(builder *LineStringBuilder, indent int) 
+        - themeAdjustment(builder *LineStringBuilder, indent int) 
     }
-    class "FieldName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
+    class "title"  << (S,  7fffd4ff)  >> {
+        - val string
+        + Write(builder *LineStringBuilder, indent int) 
     }
-    class "FunctionName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
+    interface Element {
+        + Write(builder *LineStringBuilder, indent int) 
     }
-    class "ImportAlias"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
+    class "AccessModifier"  << (D,  ff7700ff) type of __int__ >> {
+        - toString() string
     }
-    class "InterfaceName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
+    class "Params"  << (D,  ff7700ff)  >> {
+        - toString() string
     }
-    class "PackageInterfaceName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-    }
-    class "PackageName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-    }
-    class "PackagePath"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-    }
-    class "PackageStructName"  << (D,  ff7700ff) type of __string__ >> {
-        + EqualString(s string) bool
-        + String() string
-    }
-    class "PackageTypeAliasName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-    }
-    class "ParameterName"  << (D,  ff7700ff) type of __string__ >> {
-    }
-    class "Parameters"  << (D,  ff7700ff)  >> {
-    }
-    class "RelativeFullTypeName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-    }
-    class "ReturnValueName"  << (D,  ff7700ff) type of __string__ >> {
+    class "RelationType"  << (D,  ff7700ff) type of __int__ >> {
     }
     class "ReturnValues"  << (D,  ff7700ff)  >> {
+        - toString() string
     }
-    class "StructName"  << (D,  ff7700ff) type of __string__ >> {
-        + EqualString(s string) bool
-        + String() string
-    }
-    class "TypeAliasName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-    }
-    class "TypeName"  << (D,  ff7700ff) type of __string__ >> {
-        + String() string
-        - builtin() bool
+    class "Stereotype"  << (D,  ff7700ff) type of __string__ >> {
+        - build() string
     }
 }
-"gocode.DefinedType" o-- "gocode.DefinedTypeName"
-"gocode.DefinedType" o-- "gocode.FunctionList"
-"gocode.DefinedType" o-- "gocode.PackageSummary"
-"gocode.DefinedType" o-- "gocode.Type"
-"gocode.DefinedTypeList" o-- "gocode.DefinedType"
-"gocode.Embed" o-- "gocode.Type"
-"gocode.EmbedList" o-- "gocode.Embed"
-"gocode.Field" o-- "gocode.FieldName"
-"gocode.Field" o-- "gocode.PackageSummary"
-"gocode.Field" o-- "gocode.Type"
-"gocode.Field" o-- "types.Var"
-"gocode.FieldList" o-- "gocode.Field"
-"gocode.Function" o-- "gocode.FunctionName"
-"gocode.Function" o-- "gocode.Parameters"
-"gocode.Function" o-- "gocode.ReturnValues"
-"gocode.FunctionList" o-- "gocode.Function"
-"gocode.Import" o-- "gocode.ImportAlias"
-"gocode.Import" o-- "gocode.PackageSummary"
-"gocode.ImportList" o-- "gocode.Import"
-"gocode.ImportList" o-- "gocode.PackageName"
-"gocode.Interface" o-- "gocode.EmbedList"
-"gocode.Interface" o-- "gocode.FunctionList"
-"gocode.Interface" o-- "types.Interface"
-"gocode.Interface" o-- "gocode.InterfaceName"
-"gocode.Interface" o-- "gocode.PackageSummary"
-"gocode.InterfaceList" o-- "gocode.Interface"
-"gocode.LoadOptions" o-- "afero.Fs"
-"gocode.Package" o-- "gocode.PackageDetail"
-"gocode.Package" o-- "gocode.PackageSummary"
-"gocode.PackageDefinedTypeMap" o-- "gocode.DefinedType"
-"gocode.PackageDefinedTypeMap" o-- "gocode.DefinedTypeName"
-"gocode.PackageDefinedTypeMap" o-- "gocode.PackageName"
-"gocode.PackageDetail" o-- "gocode.DefinedTypeList"
-"gocode.PackageDetail" o-- "gocode.ImportList"
-"gocode.PackageDetail" o-- "gocode.InterfaceList"
-"gocode.PackageDetail" o-- "gocode.StructList"
-"gocode.PackageDetail" o-- "gocode.TypeAliasList"
-"gocode.PackageGraph" o-- "gocode.PackagePath"
-"gocode.PackageGraph" o-- "gocode.PackageSummary"
-"gocode.PackageInterfaceMap" o-- "gocode.Interface"
-"gocode.PackageInterfaceMap" o-- "gocode.InterfaceName"
-"gocode.PackageInterfaceMap" o-- "gocode.PackageName"
-"gocode.PackageMap" o-- "gocode.Package"
-"gocode.PackageMap" o-- "gocode.PackagePath"
-"gocode.PackageStructureMap" o-- "gocode.PackageName"
-"gocode.PackageStructureMap" o-- "gocode.Struct"
-"gocode.PackageStructureMap" o-- "gocode.StructName"
-"gocode.PackageSummary" o-- "gocode.PackageName"
-"gocode.PackageSummary" o-- "gocode.PackagePath"
-"gocode.PackageTypeAliasMap" o-- "gocode.PackageName"
-"gocode.PackageTypeAliasMap" o-- "gocode.TypeAlias"
-"gocode.PackageTypeAliasMap" o-- "gocode.TypeAliasName"
-"gocode.Parameter" o-- "gocode.Type"
-"gocode.Relations" o-- "gocode.PackageDefinedTypeMap"
-"gocode.Relations" o-- "gocode.PackageInterfaceMap"
-"gocode.Relations" o-- "gocode.PackageMap"
-"gocode.Relations" o-- "gocode.PackageStructureMap"
-"gocode.Relations" o-- "gocode.PackageTypeAliasMap"
-"gocode.ReturnValue" o-- "gocode.Type"
-"gocode.Struct" o-- "gocode.FieldList"
-"gocode.Struct" o-- "gocode.FunctionList"
-"gocode.Struct" o-- "gocode.PackageInterfaceMap"
-"gocode.Struct" o-- "gocode.PackageSummary"
-"gocode.Struct" o-- "gocode.StructName"
-"gocode.Struct" o-- "gocode.Type"
-"gocode.Struct" o-- "types.Type"
-"gocode.StructList" o-- "gocode.Struct"
-"gocode.Type" o-- "gocode.PackageSummary"
-"gocode.Type" o-- "gocode.RelativeFullTypeName"
-"gocode.Type" o-- "types.Type"
-"gocode.Type" o-- "gocode.Type"
-"gocode.Type" o-- "gocode.TypeName"
-"gocode.TypeAlias" o-- "gocode.PackageSummary"
-"gocode.TypeAlias" o-- "gocode.Type"
-"gocode.TypeAlias" o-- "gocode.TypeAliasName"
-"gocode.TypeAliasList" o-- "gocode.TypeAlias"
-"gocode.typeConverter" o-- "gocode.PackageSummary"
-namespace gocode {
-    class "[]*Parameter" as []*Parameter << (s,  3cb371ff)  >> {
+"plantuml.ClassOptions" o-- "plantuml.Spot"
+"plantuml.ClassOptions" o-- "plantuml.Stereotype"
+"plantuml.ElementStore" o-- "plantuml.Element"
+"strings.Builder" *-- "plantuml.LineStringBuilder"
+"plantuml.Result" o-- "plantuml.LineStringBuilder"
+"plantuml.Spot" o-- "plantuml.Color"
+"plantuml.Element" <|-- "plantuml.class"
+"plantuml.class" o-- "plantuml.Element"
+"plantuml.class" o-- "plantuml.Spot"
+"plantuml.class" o-- "plantuml.Stereotype"
+"plantuml.Element" <|-- "plantuml.field"
+"plantuml.field" o-- "plantuml.AccessModifier"
+"plantuml.Element" <|-- "plantuml.iface"
+"plantuml.iface" o-- "plantuml.Element"
+"plantuml.Element" <|-- "plantuml.legend"
+"plantuml.Element" <|-- "plantuml.method"
+"plantuml.method" o-- "plantuml.AccessModifier"
+"plantuml.method" o-- "plantuml.Params"
+"plantuml.method" o-- "plantuml.ReturnValues"
+"plantuml.Element" <|-- "plantuml.namespace"
+"plantuml.namespace" o-- "plantuml.Element"
+"plantuml.Element" <|-- "plantuml.relation"
+"plantuml.relation" o-- "plantuml.RelationTarget"
+"plantuml.relation" o-- "plantuml.RelationTarget"
+"plantuml.relation" o-- "plantuml.RelationType"
+"plantuml.Element" <|-- "plantuml.theme"
+"plantuml.Element" <|-- "plantuml.title"
+namespace plantuml {
+    class "[]Param" as []Param << (s,  3cb371ff)  >> {
     }
 }
-"gocode.[]*Parameter" #.. "gocode.Parameters"
-namespace gocode {
-    class "[]*ReturnValue" as []*ReturnValue << (s,  3cb371ff)  >> {
+"plantuml.[]Param" #.. "plantuml.Params"
+namespace plantuml {
+    class "[]ReturnValue" as []ReturnValue << (s,  3cb371ff)  >> {
     }
 }
-"gocode.[]*ReturnValue" #.. "gocode.ReturnValues"
+"plantuml.[]ReturnValue" #.. "plantuml.ReturnValues"
+namespace renderer {
+    class "Renderer"  << (S,  7fffd4ff)  >> {
+        - relations *Relations
+        - renderingOptions *RenderingOptions
+        - structRenderer *structRenderer
+        - interfaceRenderer *interfaceRenderer
+        - definedTypeRenderer *definedTypeRenderer
+        - aliasRenderer *aliasRenderer
+        + Render() *Result
+        - buildPackage(pkgName PackageName) *ElementStore
+    }
+    class "RenderingOptions"  << (S,  7fffd4ff)  >> {
+        + Title string
+        + Notes string
+        + Theme string
+    }
+    class "aliasRenderer"  << (S,  7fffd4ff)  >> {
+        - relations *Relations
+        - buildTypeAliases() *ElementStore
+    }
+    class "definedTypeRenderer"  << (S,  7fffd4ff)  >> {
+        - relations *Relations
+        - methodRenderer *methodRenderer
+        - build(definedType *DefinedType) Element
+        - buildInPkg(pkgName PackageName) *ElementStore
+        - buildMethods(definedType *DefinedType) *ElementStore
+        - buildRelation(pkgName PackageName, dt *DefinedType) *ElementStore
+        - buildRelations(pkgName PackageName) *ElementStore
+        - sortedDefinedTypeNames(pkgName PackageName) []DefinedTypeName
+    }
+    class "interfaceRenderer"  << (S,  7fffd4ff)  >> {
+        - relations *Relations
+        - methodRenderer *methodRenderer
+        - buildCompositions(iface *Interface) *ElementStore
+        - buildInPkg(pkgName PackageName) *ElementStore
+        - buildInterface(iface *Interface) Element
+        - buildMethods(iface *Interface) *ElementStore
+        - buildRelations(pkgName PackageName) *ElementStore
+        - sortedInterfaceNames(pkgName PackageName) []InterfaceName
+    }
+    class "methodRenderer"  << (S,  7fffd4ff)  >> {
+        - buildMethods(functions []*Function) *ElementStore
+    }
+    class "structRenderer"  << (S,  7fffd4ff)  >> {
+        - relations *Relations
+        - methodRenderer *methodRenderer
+        - buildAggregations(st *Struct) *ElementStore
+        - buildCompositions(s *Struct) *ElementStore
+        - buildElementStructure(st *Struct) Element
+        - buildExtends(st *Struct) *ElementStore
+        - buildInPkg(pkgName PackageName) *ElementStore
+        - buildStructCompositionFromField(structure *Struct, f *Field) *ElementStore
+        - buildStructFields(st *Struct) *ElementStore
+        - buildStructMethods(st *Struct) *ElementStore
+        - buildStructRelation(st *Struct) *ElementStore
+        - buildStructRelations(pkgName PackageName) *ElementStore
+        - sortedStructNames(pkgName PackageName) []StructName
+    }
+}
+"renderer.Renderer" o-- "gocode.Relations"
+"renderer.Renderer" o-- "renderer.RenderingOptions"
+"renderer.Renderer" o-- "renderer.aliasRenderer"
+"renderer.Renderer" o-- "renderer.definedTypeRenderer"
+"renderer.Renderer" o-- "renderer.interfaceRenderer"
+"renderer.Renderer" o-- "renderer.structRenderer"
+"renderer.aliasRenderer" o-- "gocode.Relations"
+"renderer.definedTypeRenderer" o-- "gocode.Relations"
+"renderer.definedTypeRenderer" o-- "renderer.methodRenderer"
+"renderer.interfaceRenderer" o-- "gocode.Relations"
+"renderer.interfaceRenderer" o-- "renderer.methodRenderer"
+"renderer.structRenderer" o-- "gocode.Relations"
+"renderer.structRenderer" o-- "renderer.methodRenderer"
+namespace renderingoptions {
+    class "Test"  << (S,  7fffd4ff)  >> {
+        - integer int
+        - function() 
+    }
+}
+namespace subfolder {
+    interface TestInterfaceAsField {
+    }
+    interface test2 {
+        - test() 
+    }
+}
+"subfolder.TestInterfaceAsField" *-- "subfolder.test2"
+namespace subfolder2 {
+    class "Subfolder2"  << (S,  7fffd4ff)  >> {
+        + SubfolderFunction(b bool, i int) bool
+    }
+}
+"subfolder3.SubfolderInterface" <|-- "subfolder2.Subfolder2"
+namespace subfolder3 {
+    interface SubfolderInterface {
+        + SubfolderFunction(bool, int) bool
+    }
+}
+namespace testingsupport {
+    class "test"  << (S,  7fffd4ff)  >> {
+        - field int
+        - field2 TestComplicatedAlias
+        - foo parenthesizedtypedeclarations.Foo
+        - test() 
+    }
+    interface testInterface {
+        - test() 
+    }
+    class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
+    }
+    class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
+    }
+}
+"testingsupport.testInterface" <|-- "testingsupport.test"
+"testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
+"testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "func(strings.Builder) bool" as funcstringsBuilderbool << (f,  3cb371ff)  >> {
+    }
+}
+"testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"
+namespace testutil {
+}
+namespace testingsupport {
+    class "aliasString"  << (T,  eddc44ff) alias of __string__ >> {
+    }
+}
 @enduml
