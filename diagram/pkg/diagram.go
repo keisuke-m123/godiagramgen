@@ -26,7 +26,7 @@ func NewDiagram(directoryPaths []string, ignoreDirectories []string, theme strin
 	}
 
 	return &Diagram{
-		renderer: newRenderer(theme, relations.GeneratePackageGraph()),
+		renderer: newRenderer(theme, relations.PackageGraph()),
 	}, nil
 }
 

@@ -26,6 +26,9 @@ func (r *renderer) render() string {
 	}
 	for _, path := range r.pkgGraph.SortedPackagePaths() {
 		elements.Add(r.buildNamespace(path))
+		for _, imPath := range r.pkgGraph.SortedImportPackagePaths(path) {
+			elements.Add(r.buildNamespace(imPath.Path()))
+		}
 	}
 	for _, path := range r.pkgGraph.SortedPackagePaths() {
 		for _, imPath := range r.pkgGraph.SortedImportPackagePaths(path) {

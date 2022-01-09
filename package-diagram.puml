@@ -40,6 +40,18 @@ namespace githubcom {
 namespace githubcom {
     namespace keisuke-m123 {
         namespace godiagramgen {
+            namespace cmd {
+                namespace godiagramgen {
+                    namespace classdiagram {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
             namespace diagram {
                 namespace class {
                 }
@@ -62,9 +74,89 @@ namespace githubcom {
 namespace githubcom {
     namespace keisuke-m123 {
         namespace godiagramgen {
+            namespace cmd {
+                namespace godiagramgen {
+                    namespace pkgdiagram {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
             namespace diagram {
                 namespace pkg {
                 }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace class {
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace class {
+                    namespace renderer {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace plantuml {
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace class {
+                    namespace renderer {
+                    }
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace plantuml {
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace diagram {
+                namespace pkg {
+                }
+            }
+        }
+    }
+}
+namespace githubcom {
+    namespace keisuke-m123 {
+        namespace godiagramgen {
+            namespace plantuml {
             }
         }
     }
