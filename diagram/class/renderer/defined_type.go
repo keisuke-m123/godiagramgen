@@ -35,7 +35,7 @@ func (r *definedTypeRenderer) buildRelations(pkgName gocode.PackageName) *plantu
 func (r *definedTypeRenderer) buildRelation(pkgName gocode.PackageName, dt *gocode.DefinedType) *plantuml.ElementStore {
 	elements := plantuml.NewElementStore()
 
-	typ := dt.Type()
+	typ := dt.UnderlyingType()
 	if typ.Builtin() {
 		return elements
 	}
@@ -67,8 +67,8 @@ func (r *definedTypeRenderer) buildInPkg(pkgName gocode.PackageName) *plantuml.E
 func (r *definedTypeRenderer) build(definedType *gocode.DefinedType) plantuml.Element {
 	color, _ := plantuml.ParseHexColor("#FF7700")
 	var stereotype string
-	if definedType.Type().Builtin() {
-		stereotype = fmt.Sprintf("type of __%s__", definedType.Type().TypeName().String())
+	if definedType.UnderlyingType().Builtin() {
+		stereotype = fmt.Sprintf("type of __%s__", definedType.UnderlyingType().TypeName().String())
 	}
 
 	return plantuml.ClassWithOption(
