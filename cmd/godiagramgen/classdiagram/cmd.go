@@ -15,21 +15,23 @@ import (
 )
 
 const (
-	FlagIgnore    = "ignore"
-	FlagTitle     = "title"
-	FlagNotes     = "notes"
-	FlagOutput    = "output"
-	FlagTheme     = "theme"
-	FlagRecursive = "recursive"
+	FlagIgnore                 = "ignore"
+	FlagTitle                  = "title"
+	FlagNotes                  = "notes"
+	FlagOutput                 = "output"
+	FlagTheme                  = "theme"
+	FlagRecursive              = "recursive"
+	FlagRenderExternalPackages = "render-external-packages"
 )
 
 type FlagValues struct {
-	Ignore    string
-	Title     string
-	Notes     string
-	Output    string
-	Theme     string
-	Recursive bool
+	Ignore                 string
+	Title                  string
+	Notes                  string
+	Output                 string
+	Theme                  string
+	Recursive              bool
+	RenderExternalPackages bool
 }
 
 type FlagSet struct {
@@ -46,6 +48,7 @@ func (fs *FlagSet) InitializeFlags() {
 	s.StringVar(&vs.Output, FlagOutput, "", "Output file path. If omitted, then this will default to standard output")
 	s.StringVar(&vs.Theme, FlagTheme, "", "Change theme")
 	s.BoolVar(&vs.Recursive, FlagRecursive, false, "Walk all directories recursively")
+	s.BoolVar(&vs.RenderExternalPackages, FlagRenderExternalPackages, false, "Render external packages")
 }
 
 func (fs *FlagSet) Values() FlagValues {

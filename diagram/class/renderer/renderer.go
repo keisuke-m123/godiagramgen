@@ -10,9 +10,10 @@ import (
 )
 
 type RenderingOptions struct {
-	Title string
-	Notes string
-	Theme string
+	Title                  string
+	Notes                  string
+	Theme                  string
+	RenderExternalPackages bool
 }
 
 type Renderer struct {
@@ -28,7 +29,7 @@ func NewRenderer(relations *gocode.Relations, options *RenderingOptions) *Render
 	return &Renderer{
 		relations:           relations,
 		renderingOptions:    options,
-		structRenderer:      newStructRenderer(relations),
+		structRenderer:      newStructRenderer(relations, options.RenderExternalPackages),
 		interfaceRenderer:   newInterfaceRenderer(relations),
 		definedTypeRenderer: newDefinedTypeRenderer(relations),
 		aliasRenderer:       newAliasRender(relations),

@@ -11,15 +11,17 @@ import (
 
 type (
 	structRenderer struct {
-		relations      *gocode.Relations
-		methodRenderer *methodRenderer
+		relations              *gocode.Relations
+		methodRenderer         *methodRenderer
+		renderExternalPackages bool
 	}
 )
 
-func newStructRenderer(relations *gocode.Relations) *structRenderer {
+func newStructRenderer(relations *gocode.Relations, renderExternalPackages bool) *structRenderer {
 	return &structRenderer{
-		relations:      relations,
-		methodRenderer: newMethodRenderer(),
+		relations:              relations,
+		methodRenderer:         newMethodRenderer(),
+		renderExternalPackages: renderExternalPackages,
 	}
 }
 
@@ -124,9 +126,10 @@ func (r *structRenderer) buildAggregations(st *gocode.Struct) *plantuml.ElementS
 	structName := st.Name().String()
 
 	for _, fType := range orderedFundamentalTypes {
-		if fType.Builtin() {
+		if fType.Builtin() || !r.isRenderingAggregation(fType) {
 			continue
 		}
+
 		fTypePkgName := fType.PackageSummary().Name().String()
 		fTypeName := removePointerFromName(fType.TypeName().String())
 		elements.Add(plantuml.Relation(
@@ -137,6 +140,11 @@ func (r *structRenderer) buildAggregations(st *gocode.Struct) *plantuml.ElementS
 	}
 
 	return elements
+}
+
+// isRenderingAggregation 外部パッケージのTypeをAggregationとして描画するかを判定する。
+func (r *structRenderer) isRenderingAggregation(fType *gocode.Type) bool {
+	return !r.renderExternalPackages && r.relations.Packages().Contains(fType.PackageSummary().Path())
 }
 
 func (r *structRenderer) buildExtends(st *gocode.Struct) *plantuml.ElementStore {

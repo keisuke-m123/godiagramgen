@@ -45,9 +45,9 @@ namespace classdiagram {
         + Output string
         + Theme string
         + Recursive bool
+        + RenderExternalPackages bool
     }
 }
-"classdiagram.FlagSet" o-- "pflag.FlagSet"
 "classdiagram.FlagSet" o-- "classdiagram.FlagValues"
 namespace connectionlabels {
     class "ImplementsAbstractInterface"  << (S,  7fffd4ff)  >> {
@@ -93,7 +93,6 @@ namespace pkg {
     }
 }
 "pkg.Diagram" o-- "pkg.renderer"
-"pkg.renderer" o-- "gocode.PackageGraph"
 namespace pkgdiagram {
     class "FlagSet"  << (S,  7fffd4ff)  >> {
         - set *FlagSet
@@ -108,7 +107,6 @@ namespace pkgdiagram {
         + Recursive bool
     }
 }
-"pkgdiagram.FlagSet" o-- "pflag.FlagSet"
 "pkgdiagram.FlagSet" o-- "pkgdiagram.FlagValues"
 namespace plantuml {
     class "ClassOptions"  << (S,  7fffd4ff)  >> {
@@ -277,6 +275,7 @@ namespace renderer {
         + Title string
         + Notes string
         + Theme string
+        + RenderExternalPackages bool
     }
     class "aliasRenderer"  << (S,  7fffd4ff)  >> {
         - relations *Relations
@@ -308,6 +307,7 @@ namespace renderer {
     class "structRenderer"  << (S,  7fffd4ff)  >> {
         - relations *Relations
         - methodRenderer *methodRenderer
+        - renderExternalPackages bool
         - buildAggregations(st *Struct) *ElementStore
         - buildCompositions(s *Struct) *ElementStore
         - buildElementStructure(st *Struct) Element
@@ -318,21 +318,17 @@ namespace renderer {
         - buildStructMethods(st *Struct) *ElementStore
         - buildStructRelation(st *Struct) *ElementStore
         - buildStructRelations(pkgName PackageName) *ElementStore
+        - isRenderingAggregation(fType *Type) bool
         - sortedStructNames(pkgName PackageName) []StructName
     }
 }
-"renderer.Renderer" o-- "gocode.Relations"
 "renderer.Renderer" o-- "renderer.RenderingOptions"
 "renderer.Renderer" o-- "renderer.aliasRenderer"
 "renderer.Renderer" o-- "renderer.definedTypeRenderer"
 "renderer.Renderer" o-- "renderer.interfaceRenderer"
 "renderer.Renderer" o-- "renderer.structRenderer"
-"renderer.aliasRenderer" o-- "gocode.Relations"
-"renderer.definedTypeRenderer" o-- "gocode.Relations"
 "renderer.definedTypeRenderer" o-- "renderer.methodRenderer"
-"renderer.interfaceRenderer" o-- "gocode.Relations"
 "renderer.interfaceRenderer" o-- "renderer.methodRenderer"
-"renderer.structRenderer" o-- "gocode.Relations"
 "renderer.structRenderer" o-- "renderer.methodRenderer"
 namespace renderingoptions {
     class "Test"  << (S,  7fffd4ff)  >> {
@@ -360,13 +356,20 @@ namespace subfolder3 {
     }
 }
 namespace testingsupport {
+    class "definedTypeTime"  << (S,  7fffd4ff)  >> {
+        - wall uint64
+        - ext int64
+        - loc *Location
+    }
     class "test"  << (S,  7fffd4ff)  >> {
         - field int
         - field2 TestComplicatedAlias
+        - field3 time.Time
         - foo parenthesizedtypedeclarations.Foo
         - test() 
     }
     interface testInterface {
+        - returnTime() Time
         - test() 
     }
     class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
@@ -376,7 +379,6 @@ namespace testingsupport {
     class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
     }
 }
-"testingsupport.testInterface" <|-- "testingsupport.test"
 "testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
 "testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
 namespace testingsupport {

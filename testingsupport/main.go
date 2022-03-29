@@ -4,6 +4,7 @@ package testingsupport
 import (
 	f "fmt"
 	"strings"
+	"time"
 
 	"github.com/keisuke-m123/godiagramgen/testingsupport/parenthesizedtypedeclarations"
 )
@@ -14,15 +15,19 @@ func (t *test) test() {
 
 type testInterface interface {
 	test()
+	returnTime() time.Time
 }
 
 type test struct {
 	field  int
 	field2 TestComplicatedAlias
+	field3 time.Time
 	foo    parenthesizedtypedeclarations.Foo
 }
 
 type definedTypeInt int
+
+type definedTypeTime time.Time
 
 type aliasString = string
 

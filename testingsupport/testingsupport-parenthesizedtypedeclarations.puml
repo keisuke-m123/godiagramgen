@@ -12,13 +12,20 @@ namespace parenthesizedtypedeclarations {
 }
 "parenthesizedtypedeclarations.Foo" <|-- "parenthesizedtypedeclarations.defaultFoo"
 namespace testingsupport {
+    class "definedTypeTime"  << (S,  7fffd4ff)  >> {
+        - wall uint64
+        - ext int64
+        - loc *Location
+    }
     class "test"  << (S,  7fffd4ff)  >> {
         - field int
         - field2 TestComplicatedAlias
+        - field3 time.Time
         - foo parenthesizedtypedeclarations.Foo
         - test() 
     }
     interface testInterface {
+        - returnTime() Time
         - test() 
     }
     class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
@@ -28,7 +35,6 @@ namespace testingsupport {
     class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
     }
 }
-"testingsupport.testInterface" <|-- "testingsupport.test"
 "testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
 "testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
 namespace testingsupport {
