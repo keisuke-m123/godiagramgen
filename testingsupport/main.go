@@ -28,5 +28,7 @@ type aliasString = string
 
 var globalVariable int
 
+type definedTypeFunc func() *definedTypeInt
+
 //TestComplicatedAlias for testing purposes only
 type TestComplicatedAlias func(strings.Builder) bool

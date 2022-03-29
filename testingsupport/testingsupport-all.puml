@@ -88,6 +88,8 @@ namespace testingsupport {
     }
     class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
     }
+    class "definedTypeFunc"  << (D,  ff7700ff)  >> {
+    }
     class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
     }
 }
@@ -99,6 +101,11 @@ namespace testingsupport {
     }
 }
 "testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "func() *definedTypeInt" as func*definedTypeInt << (f,  3cb371ff)  >> {
+    }
+}
+"testingsupport.func*definedTypeInt" #.. "testingsupport.definedTypeFunc"
 namespace testingsupport {
     class "aliasString"  << (T,  eddc44ff) alias of __string__ >> {
     }

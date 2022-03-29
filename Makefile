@@ -3,6 +3,10 @@ init:
 	go install golang.org/x/tools/cmd/goimports@latest
 	go install honnef.co/go/tools/cmd/staticcheck@latest
 
+.PHONY: updatemodules
+updatemodules:
+	go get github.com/keisuke-m123/goanalyzer
+
 .PHONY: install
 install:
 	go install ./cmd/godiagramgen

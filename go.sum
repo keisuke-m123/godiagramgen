@@ -179,6 +179,8 @@ github.com/keisuke-m123/goanalyzer v0.0.0-20220109054825-5c36f0c2af1b h1:TspVBEZ
 github.com/keisuke-m123/goanalyzer v0.0.0-20220109054825-5c36f0c2af1b/go.mod h1:YZ5ZzbMB4aPj5ncR09+gfknk3SmoYyMvP0rwYRTDIFU=
 github.com/keisuke-m123/goanalyzer v0.0.0-20220119142647-78e01abcab11 h1:LrxwgBHZWKb4+Y04ij5UVpX8W8MfBisGSsu60rPdgDU=
 github.com/keisuke-m123/goanalyzer v0.0.0-20220119142647-78e01abcab11/go.mod h1:YZ5ZzbMB4aPj5ncR09+gfknk3SmoYyMvP0rwYRTDIFU=
+github.com/keisuke-m123/goanalyzer v0.0.0-20220329091650-492d1fd46160 h1:fJZTQ3V7iHHXU3S7GjDyezGhuL5F+z2mIOGbUCLUbT4=
+github.com/keisuke-m123/goanalyzer v0.0.0-20220329091650-492d1fd46160/go.mod h1:YZ5ZzbMB4aPj5ncR09+gfknk3SmoYyMvP0rwYRTDIFU=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=

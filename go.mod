@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/google/go-cmp v0.5.6
-	github.com/keisuke-m123/goanalyzer v0.0.0-20220119142647-78e01abcab11
+	github.com/keisuke-m123/goanalyzer v0.0.0-20220329091650-492d1fd46160
 	github.com/spf13/afero v1.8.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/pflag v1.0.5

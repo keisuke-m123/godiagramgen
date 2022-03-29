@@ -80,7 +80,7 @@ func (r *Renderer) buildPackage(pkgName gocode.PackageName) *plantuml.ElementSto
 }
 
 func generateRenamedName(currentName string) string {
-	reg, _ := regexp.Compile("[^a-zA-Z0-9]+")
+	reg, _ := regexp.Compile("[^a-zA-Z0-9*]+")
 	return reg.ReplaceAllString(currentName, "")
 }
 

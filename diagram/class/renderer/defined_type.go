@@ -42,9 +42,7 @@ func (r *definedTypeRenderer) buildRelation(pkgName gocode.PackageName, dt *goco
 
 	typeName := typ.TypeName().String()
 	if renamed := generateRenamedName(typeName); typeName != renamed {
-		if typ.ContainsBuiltinInFundamentalTypes() {
-			typeName = renamed
-		}
+		typeName = renamed
 		elements.Add(newTypedClass(pkgName.String(), typ.TypeName().String(), typeName))
 	}
 

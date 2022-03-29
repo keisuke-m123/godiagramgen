@@ -1,4 +1,4 @@
-# GoDiagramGenerator
+# GoDiagramGen
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/keisuke-m123/godiagramgen.svg)](https://pkg.go.dev/github.com/keisuke-m123/godiagramgen)
 [![codecov](https://codecov.io/gh/keisuke-m123/godiagramgen/branch/main/graph/badge.svg)](https://codecov.io/gh/keisuke-m123/godiagramgen)
@@ -6,7 +6,7 @@
 
 work in progress
 
-GoDiagramGeneratorはGo言語でのコード設計を支援するツールです。 Goコードから図を生成します。
+Goコードから図を生成します。
 
 ## インストール
 
@@ -34,7 +34,7 @@ godiagramgen package --output=./package-diagram.puml --theme=reddress-darkorange
 
 ![パッケージ依存関係](https://www.plantuml.com/plantuml/png/vPI_JiCm4CPtFuNfdaZ0mi3GbPadkDgdg-NuZ_ndeSgxWvGKSWCe2af9YoSd_dI_xxkJRfyBf59T9-xA4HtAX5edpBdHa6n8u0b5jiP7IE2awY1dUHBouq0foHngmHSL_AjvG_aaUk71OOwWK98fntfGmOtwhnUB9bUBZRj_U1mVkO22Da097A6V2BX8EStUvXOPJo_u5x_rLnI5YuSPZVflnFt_wKQqTCszODv_6hWytMmEhaheDIPCDplEQ6dZmwIWWaPvsf2bs84lrNMRCbKmbrhC75ExJo_jbDrEEQrocl-OhlgTV6uQkQZERY4-MheOVBmEaPVZUC-MiDlp0leZ4z7IRyZHqeN3im8peSE6MHbotXdRpS8wlduepbivNRIqNYG6sQFNrNNY7G00)
 
-## 開発者向け
+## 開発
 
 ```shell
 # 各pumlファイルを更新します

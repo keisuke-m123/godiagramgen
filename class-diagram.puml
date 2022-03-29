@@ -193,12 +193,6 @@ namespace plantuml {
         - buildParameters() string
         - buildReturnValues() string
     }
-    class "namespace"  << (S,  7fffd4ff)  >> {
-        - val string
-        - as string
-        - elements []Element
-        + Write(builder *LineStringBuilder, indent int) 
-    }
     class "relation"  << (S,  7fffd4ff)  >> {
         - from RelationTarget
         - to RelationTarget
@@ -252,8 +246,6 @@ namespace plantuml {
 "plantuml.method" o-- "plantuml.AccessModifier"
 "plantuml.method" o-- "plantuml.Params"
 "plantuml.method" o-- "plantuml.ReturnValues"
-"plantuml.Element" <|-- "plantuml.namespace"
-"plantuml.namespace" o-- "plantuml.Element"
 "plantuml.Element" <|-- "plantuml.relation"
 "plantuml.relation" o-- "plantuml.RelationTarget"
 "plantuml.relation" o-- "plantuml.RelationTarget"
@@ -261,15 +253,15 @@ namespace plantuml {
 "plantuml.Element" <|-- "plantuml.theme"
 "plantuml.Element" <|-- "plantuml.title"
 namespace plantuml {
-    class "[]Param" as []Param << (s,  3cb371ff)  >> {
+    class "[]Param" as Param << (s,  3cb371ff)  >> {
     }
 }
-"plantuml.[]Param" #.. "plantuml.Params"
+"plantuml.Param" #.. "plantuml.Params"
 namespace plantuml {
-    class "[]ReturnValue" as []ReturnValue << (s,  3cb371ff)  >> {
+    class "[]ReturnValue" as ReturnValue << (s,  3cb371ff)  >> {
     }
 }
-"plantuml.[]ReturnValue" #.. "plantuml.ReturnValues"
+"plantuml.ReturnValue" #.. "plantuml.ReturnValues"
 namespace renderer {
     class "Renderer"  << (S,  7fffd4ff)  >> {
         - relations *Relations
@@ -379,6 +371,8 @@ namespace testingsupport {
     }
     class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
     }
+    class "definedTypeFunc"  << (D,  ff7700ff)  >> {
+    }
     class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
     }
 }
@@ -390,6 +384,11 @@ namespace testingsupport {
     }
 }
 "testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "func() *definedTypeInt" as func*definedTypeInt << (f,  3cb371ff)  >> {
+    }
+}
+"testingsupport.func*definedTypeInt" #.. "testingsupport.definedTypeFunc"
 namespace testutil {
 }
 namespace testingsupport {
