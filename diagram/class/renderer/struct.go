@@ -144,7 +144,7 @@ func (r *structRenderer) buildAggregations(st *gocode.Struct) *plantuml.ElementS
 
 // isRenderingAggregation 外部パッケージのTypeをAggregationとして描画するかを判定する。
 func (r *structRenderer) isRenderingAggregation(fType *gocode.Type) bool {
-	return !r.renderExternalPackages && r.relations.Packages().Contains(fType.PackageSummary().Path())
+	return r.renderExternalPackages || r.relations.Packages().Contains(fType.PackageSummary().Path())
 }
 
 func (r *structRenderer) buildExtends(st *gocode.Struct) *plantuml.ElementStore {

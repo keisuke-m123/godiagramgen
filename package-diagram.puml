@@ -1,8 +1,5 @@
 @startuml
-!theme reddress-darkorange
-skinparam class {
-    attributeIconSize 8
-}
+!theme reddress-orange
 namespace githubcom {
     namespace keisuke-m123 {
         namespace godiagramgen {

@@ -46,6 +46,14 @@ func TestClassDiagram_Render(t *testing.T) {
 			wantFilePath: "../../testingsupport/testingsupport.puml",
 		},
 		{
+			name: "TestingSupportWithRenderExternalPackages",
+			renderingOptions: &renderer.RenderingOptions{
+				RenderExternalPackages: true,
+			},
+			directories:  []string{"../../testingsupport"},
+			wantFilePath: "../../testingsupport/testingsupport-render-external-packages.puml",
+		},
+		{
 			name:             "ParenTheSizedTypeDeclarations",
 			renderingOptions: &renderer.RenderingOptions{},
 			directories:      []string{"../../testingsupport", "../../testingsupport/parenthesizedtypedeclarations"},

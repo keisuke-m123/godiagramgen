@@ -1,0 +1,44 @@
+@startuml
+namespace testingsupport {
+    class "definedTypeTime"  << (S,  7fffd4ff)  >> {
+        - wall uint64
+        - ext int64
+        - loc *Location
+    }
+    class "test"  << (S,  7fffd4ff)  >> {
+        - field int
+        - field2 TestComplicatedAlias
+        - field3 time.Time
+        - foo parenthesizedtypedeclarations.Foo
+        - test() 
+    }
+    interface testInterface {
+        - returnTime() Time
+        - test() 
+    }
+    class "TestComplicatedAlias"  << (D,  ff7700ff)  >> {
+    }
+    class "definedTypeFunc"  << (D,  ff7700ff)  >> {
+    }
+    class "definedTypeInt"  << (D,  ff7700ff) type of __int__ >> {
+    }
+}
+"testingsupport.definedTypeTime" o-- "time.Location"
+"testingsupport.test" o-- "parenthesizedtypedeclarations.Foo"
+"testingsupport.test" o-- "testingsupport.TestComplicatedAlias"
+"testingsupport.test" o-- "time.Time"
+namespace testingsupport {
+    class "func(strings.Builder) bool" as funcstringsBuilderbool << (f,  3cb371ff)  >> {
+    }
+}
+"testingsupport.funcstringsBuilderbool" #.. "testingsupport.TestComplicatedAlias"
+namespace testingsupport {
+    class "func() *definedTypeInt" as func*definedTypeInt << (f,  3cb371ff)  >> {
+    }
+}
+"testingsupport.func*definedTypeInt" #.. "testingsupport.definedTypeFunc"
+namespace testingsupport {
+    class "aliasString"  << (T,  eddc44ff) alias of __string__ >> {
+    }
+}
+@enduml

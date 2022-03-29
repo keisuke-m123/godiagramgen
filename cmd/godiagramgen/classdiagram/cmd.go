@@ -82,9 +82,10 @@ func run(flagValues FlagValues, args []string) {
 		}
 	}
 	renderingOptions := &renderer.RenderingOptions{
-		Title: flagValues.Title,
-		Notes: strings.Join(noteList, "\n"),
-		Theme: flagValues.Theme,
+		Title:                  flagValues.Title,
+		Notes:                  strings.Join(noteList, "\n"),
+		Theme:                  flagValues.Theme,
+		RenderExternalPackages: flagValues.RenderExternalPackages,
 	}
 
 	dirs, err := getDirectories(args)
